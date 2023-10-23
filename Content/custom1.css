@@ -79,6 +79,13 @@ body > .container {
 .slide-section {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.arrow-btn {
+    font-size: 2rem;
+    padding: 16px;
+    cursor: pointer;
 }
 
 .img-slides {
@@ -362,3 +369,7 @@ body > .container {
         width: 100px;
         text-align: center;
     }
+
+.user-review {
+    display:flex;
+}

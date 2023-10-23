@@ -228,6 +228,9 @@
     <Content Include="Images\slider-5.jpg" />
     <Content Include="Images\slider-6.jpg" />
     <Content Include="Images\slider-7.jpg" />
+    <Content Include="Images\user-1.png" />
+    <Content Include="Images\user-2.png" />
+    <Content Include="Images\user-3.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

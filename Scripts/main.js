@@ -5,8 +5,11 @@ const $ = document.querySelector.bind(document);
 
 const navHeight = $('.site-header');
 const upBtn = $('#up-btn');
-const roomList = $('.room-list');
+const arrowLeftBtn = $('.arrow-left');
+const arrowRightBtn = $('.arrow-right');
 
+//room
+const roomList = $('.room-list');
 const roomForm = $('.room-form');
 const closeBtn = $('.close-btn');
 const bookBtn = $('.book-btn');
@@ -41,13 +44,32 @@ date1.addEventListener("change", function () {
     date2.min = date1.value;
 });
 
-setInterval(function () {
-    document.getElementById('slide-radio' + counter).checked = true;
-    counter++;
-    if (counter > 7) {
-        counter = 1;
+window.onload = function () {
+    arrowLeftBtn.onclick = function () {
+        counter--;
+        if (counter < 1) {
+            counter = 7;
+        }
+        document.getElementById('slide-radio' + counter).checked = true;
+        console.log(counter);
     }
-}, 5000);
+
+    arrowRightBtn.onclick = function () {
+        counter++;
+        if (counter > 7) {
+            counter = 1;
+        }
+        document.getElementById('slide-radio' + counter).checked = true;
+        console.log(counter);
+    }
+    setInterval(function () {
+        document.getElementById('slide-radio' + counter).checked = true;
+        counter++;
+        if (counter > 7) {
+            counter = 1;
+        }
+    }, 5000);
+}
 
 const app = {
     rooms: [
@@ -131,9 +153,18 @@ const app = {
     },
     
     openForm: function () {
-
+        roomForm.style.display = "block";
     },
-    start: function() {
+
+    handleEvent: function () {
+        const _this = this;
+        bookBtn.onclick = function () {
+            _this.openForm();
+        }
+    },
+
+    start: function () {
+        //this.handleEvent();
         this.render();
     }
 }

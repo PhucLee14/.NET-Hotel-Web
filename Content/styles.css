@@ -114,7 +114,7 @@ textarea.form-control {
     top: 0;
     width: 100%;
     padding: 60px 0;
-    z-index: 2;
+    z-index: 100;
     -webkit-transition: .3s all ease-in-out;
     -o-transition: .3s all ease-in-out;
     transition: .3s all ease-in-out;
