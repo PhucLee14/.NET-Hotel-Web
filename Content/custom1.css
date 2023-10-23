@@ -288,7 +288,7 @@ body > .container {
     height: 100vh;
     z-index: 9999;
     background-color: rgba(0,0,0,0.5);
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -300,6 +300,7 @@ body > .container {
     max-width: calc(100% - 32px);
     border-radius: 12px;
     overflow: hidden;
+    animation: modalFaceIn ease .8s;
 }
 
 .booking-room {
@@ -372,4 +373,19 @@ body > .container {
 
 .user-review {
     display:flex;
+}
+
+.form-active {
+    display: block;
+}
+
+@keyframes modalFaceIn {
+    from {
+        opacity: 0;
+        transform: translateY(-150px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

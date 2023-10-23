@@ -2,6 +2,7 @@
 'use strict';
 
 const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
 
 const navHeight = $('.site-header');
 const upBtn = $('#up-btn');
@@ -12,7 +13,6 @@ const arrowRightBtn = $('.arrow-right');
 const roomList = $('.room-list');
 const roomForm = $('.room-form');
 const closeBtn = $('.close-btn');
-const bookBtn = $('.book-btn');
 
 var date1 = document.getElementById("checkin_date");
 var date2 = document.getElementById("checkout_date");
@@ -142,7 +142,7 @@ const app = {
                             </div>
                             <div class="book-room">
                                 <p class="room-price">${"$" + room.price + "/Night"}</p>
-                                <p class="book-btn">Book Now</p>
+                                <p class="book-btn js-book-btn">Book Now</p>
                             </div>
                         </div>
                     </div>
@@ -158,23 +158,26 @@ const app = {
 
     handleEvent: function () {
         const _this = this;
-        bookBtn.onclick = function () {
-            _this.openForm();
-        }
+        
     },
 
     start: function () {
-        //this.handleEvent();
+        this.handleEvent();
         this.render();
     }
 }
 app.start();
 
 
+const bookBtns = document.querySelectorAll('.js-book-btn');
 closeBtn.onclick = function () {
     roomForm.style.display = "none";
 }
 
-bookBtn.onclick = function () {
-    roomForm.style.display = "block";
+function showForm() {
+    roomForm.style.display = "flex";
+}
+
+for (const bookBtn of bookBtns) {
+    bookBtn.addEventListener('click', showForm);
 }

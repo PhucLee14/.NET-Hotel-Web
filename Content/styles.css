@@ -1516,11 +1516,11 @@ textarea.form-control {
             margin-bottom: 0 !important;
         }
 
-    .room:hover .img-wrap img, .room:focus .img-wrap img {
-        -webkit-transform: scale(1.05);
-        -ms-transform: scale(1.05);
-        transform: scale(1.05);
-    }
+            .room .img-wrap img:hover, .room:focus .img-wrap img {
+                -webkit-transform: scale(1.05);
+                -ms-transform: scale(1.05);
+                transform: scale(1.05);
+            }
 
 .letter-spacing-1 {
     letter-spacing: .1em;
