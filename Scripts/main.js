@@ -18,29 +18,9 @@ var date1 = document.getElementById("checkin_date");
 var date2 = document.getElementById("checkout_date");
 var counter = 1;
 
-document.onscroll = function () {
-    window.scrollY >= 180 ? navHeight.style.padding = "30px 0" : navHeight.style.padding = "60px 0";
-    /*window.scrollY >= 620 ? navHeight.style.backgroundColor = "rgba(0,0,0,0.76)" : navHeight.style.backgroundColor = "transparent";*/
-    if (window.scrollY >= 180) {
-        navHeight.style.backgroundColor = "rgba(0,0,0,0.5)";
-        navHeight.style.backdropFilter = "blur(6px)";
-    }
-    else {
-        navHeight.style.backgroundColor = "transparent";
-        navHeight.style.backdropFilter = "blur(0)";
-    }
-    scrollY >= 620 ? upBtn.style.display = "block" : upBtn.style.display = "none";
-}
-
-function backToTop() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-}
-upBtn.addEventListener("click", backToTop);
 
 date1.addEventListener("change", function () {
     var date1Value = new Date(date1.value);
-
     date2.min = date1.value;
 });
 
@@ -117,7 +97,7 @@ const app = {
         }
     ],
     render: function () {
-        const htmls = this.rooms.map(( room, index ) => {
+        const roomslist = this.rooms.map(( room, index ) => {
             return `
                 <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
                     <div class="room">
@@ -149,16 +129,28 @@ const app = {
                 </div>
             `
         })
-        roomList.innerHTML = htmls.join("");
-    },
-    
-    openForm: function () {
-        roomForm.style.display = "block";
+        roomList.innerHTML = roomslist.join("");
     },
 
     handleEvent: function () {
         const _this = this;
-        
+        document.onscroll = function () {
+            window.scrollY >= 180 ? navHeight.style.padding = "30px 0" : navHeight.style.padding = "60px 0";
+            if (window.scrollY >= 180) {
+                navHeight.style.backgroundColor = "rgba(0,0,0,0.5)";
+                navHeight.style.backdropFilter = "blur(6px)";
+            }
+            else {
+                navHeight.style.backgroundColor = "transparent";
+                navHeight.style.backdropFilter = "blur(0)";
+            }
+            scrollY >= 620 ? upBtn.style.display = "block" : upBtn.style.display = "none";
+        }
+
+        upBtn.onclick = function () {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
     },
 
     start: function () {
@@ -168,16 +160,23 @@ const app = {
 }
 app.start();
 
-
-const bookBtns = document.querySelectorAll('.js-book-btn');
+const bookBtns = $$('.js-book-btn');
 closeBtn.onclick = function () {
     roomForm.style.display = "none";
 }
 
-function showForm() {
-    roomForm.style.display = "flex";
-}
-
 for (const bookBtn of bookBtns) {
-    bookBtn.addEventListener('click', showForm);
+    bookBtn.onclick = function (e) {
+        roomForm.style.display = "flex";
+        const roomNode = e.target.closest('.room');
+        if (roomNode) {
+            const typeOfRoom = roomNode.querySelector('.room-type');
+            const imgPath = roomNode.querySelector('.img-fluid');
+            const formTitle = roomForm.querySelector('h2')
+            const formImage = roomForm.querySelector('.room-thumb');
+            console.log(formImage.src);
+            console.log(imgPath.src);
+            formTitle.textContent = typeOfRoom.textContent;
+        }
+    }
 }
