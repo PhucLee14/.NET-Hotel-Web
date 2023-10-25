@@ -257,15 +257,17 @@
             </div>
         </div>
     </div>
+    <script src="~/Scripts/validate.js"></script>
     <script>
         Validator({
             form: '#booking-form',
-            rule: [
+            errorSelector: '.form-message',
+            rules: [
                 Validator.isRequired('#client-name'),
-                Validator.isRequired( '#client-phone-number'),
+                Validator.isPhoneNumber( '#client-phone-number'),
                 Validator.isEmail('#client-email'),
                 Validator.isRequired( '#checkin_booking'),
-                Validator.isRequired( '#checkout_bookingr'),
+                Validator.isRequired( '#checkout_booking'),
             ]
         })
     </script>

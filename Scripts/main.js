@@ -22,14 +22,6 @@ var dateBook2 = $("#checkout_booking");
 var counter = 1;
 
 
-dateCheck1.addEventListener("change", function () {
-    var date1Value = new Date(dateCheck1.value);
-    dateCheck2.min = dateCheck1.value;
-});
-dateBook1.addEventListener("change", function () {
-    var date1Value = new Date(dateBook1.value);
-    dateBook2.min = dateBook1.value;
-});
 
 window.onload = function () {
     arrowLeftBtn.onclick = function () {
@@ -220,3 +212,24 @@ for (const bookBtn of bookBtns) {
         }
     }
 }
+//check available room
+dateCheck1.addEventListener("change", function () {
+    var date1Value = new Date(dateCheck1.value);
+    dateCheck2.min = dateCheck1.value;
+});
+dateCheck2.addEventListener("change", function () {
+    var date2Value = new Date(dateCheck2.value);
+    dateCheck1.max = dateCheck2.value;
+});
+
+//check booking date
+dateBook1.addEventListener("change", function () {
+    var date1Value = new Date(dateBook1.value);
+    dateBook2.min = dateBook1.value;
+});
+dateBook2.addEventListener("change", function () {
+    var date2Value = new Date(dateBook2.value);
+    dateBook1.max = dateBook2.value;
+});
+
+

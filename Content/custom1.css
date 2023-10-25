@@ -325,9 +325,17 @@ body > .container {
         font-weight: 700;
     }
 
+    .booking-room .form-group {
+        margin-bottom: 16px;
+    }
+
+        .booking-room .form-group .form-message {
+            font-size: 0.8rem;
+            font-weight: 100;
+        }
+
     .booking-room input {
         padding: 8px 0;
-        margin-bottom: 16px;
         border: none;
         border-bottom: 2px solid #ccc;
     }
@@ -394,6 +402,18 @@ body > .container {
 
 .form-active {
     display: block;
+}
+
+.form-group.invalid{
+    margin-bottom: -4px;
+}
+
+.form-group.invalid input {
+    border-bottom: 2px solid #f33a58;
+}
+
+.form-group.invalid .form-message {
+    color: #f33a58;
 }
 
 @keyframes modalFaceIn {
