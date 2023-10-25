@@ -211,27 +211,63 @@
             <div class="room-thumb col-4 col-lg-4" style="background: url('@Url.Content("~/Images/img_1.jpg")') top center / cover no-repeat"></div>
             <div class="booking-room col-8 col-lg-8">
                 <i class="fa-solid fa-x close-btn"></i>
-                <h2>Room Type</h2>
-                <input type="text" placeholder="Input Your Name" />
-                <input type="text" placeholder="Input Your Phone Number" />
-                <input type="text" placeholder="Input Your Email" />
-                <div class="date">
-                    <input type="date" id="checkin_booking" placeholder="mm/dd/yyyy">
-                    <input type="date" id="checkout_booking">
-                </div>
-                <div class="client">
-                    <div class="client-section">
-                        <label>Adults</label>
-                        <input type="number" class="client-number" placeholder="Adults">
+                <form id="booking-form">
+                    <h2>Room Type</h2>
+                    <div class="form-group">
+                        <input type="text" class="client-name" id="client-name" placeholder="Input Your Name" required>
+                        <span class="form-message"></span>
                     </div>
-                    <div class="client-section">
-                        <label>Children</label>
-                        <input type="number" class="client-number" placeholder="Children">
+                    <div class="form-group">
+                        <input type="text" class="client-phone-number" id="client-phone-number" placeholder="Input Your Phone Number" required>
+                        <span class="form-message"></span>
                     </div>
-                </div>
-                <div class="button-section"><p class="submit-form-btn">Submit</p></div>
+                    <div class="form-group">
+                        <input type="text" class="client-email" id="client-email" placeholder="Input Your Email" required>
+                        <span class="form-message"></span>
+                    </div>
+                    <div class="date">
+                        <div class="form-group">
+                            <input type="date" id="checkin_booking" placeholder="mm/dd/yyyy">
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" id="checkout_booking">
+                            <span class="form-message"></span>
+                        </div>
+                    </div>
+                    <div class="client">
+                        <div class="client-section">
+                            <div class="form-group">
+                                <label>Adults</label>
+                                <input type="number" class="adults-number" required placeholder="Adults">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                        <div class="client-section">
+                            <div class="form-group">
+                                <label>Children</label>
+                                <input type="number" class="children-number" required placeholder="Children">
+                                <span class="form-message"></span>
+                            </div>
+                        </div>
+                    </div>
+                    @*<input src="#" type="submit" class="submit-form-btn" value="Submit">*@
+                    <p class="submit-form-btn">Submit</p>
+                </form>
             </div>
         </div>
     </div>
+    <script>
+        Validator({
+            form: '#booking-form',
+            rule: [
+                Validator.isRequired('#client-name'),
+                Validator.isRequired( '#client-phone-number'),
+                Validator.isEmail('#client-email'),
+                Validator.isRequired( '#checkin_booking'),
+                Validator.isRequired( '#checkout_bookingr'),
+            ]
+        })
+    </script>
 </body>
 </html>

@@ -13,15 +13,22 @@ const arrowRightBtn = $('.arrow-right');
 const roomList = $('.room-list');
 const roomForm = $('.room-form');
 const closeBtn = $('.close-btn');
+const submitBtn = $('.submit-form-btn');
 
-var date1 = document.getElementById("checkin_date");
-var date2 = document.getElementById("checkout_date");
+var dateCheck1 = $("#checkin_date");
+var dateCheck2 = $("#checkout_date");
+var dateBook1 = $("#checkin_booking");
+var dateBook2 = $("#checkout_booking");
 var counter = 1;
 
 
-date1.addEventListener("change", function () {
-    var date1Value = new Date(date1.value);
-    date2.min = date1.value;
+dateCheck1.addEventListener("change", function () {
+    var date1Value = new Date(dateCheck1.value);
+    dateCheck2.min = dateCheck1.value;
+});
+dateBook1.addEventListener("change", function () {
+    var date1Value = new Date(dateBook1.value);
+    dateBook2.min = dateBook1.value;
 });
 
 window.onload = function () {
@@ -161,22 +168,55 @@ const app = {
 app.start();
 
 const bookBtns = $$('.js-book-btn');
-closeBtn.onclick = function () {
-    roomForm.style.display = "none";
-}
+const clientTemp = [];
 
 for (const bookBtn of bookBtns) {
+    const clientInfo = [];
     bookBtn.onclick = function (e) {
         roomForm.style.display = "flex";
         const roomNode = e.target.closest('.room');
         if (roomNode) {
+
             const typeOfRoom = roomNode.querySelector('.room-type');
             const imgPath = roomNode.querySelector('.img-fluid');
+
             const formTitle = roomForm.querySelector('h2')
             const formImage = roomForm.querySelector('.room-thumb');
-            console.log(formImage.src);
-            console.log(imgPath.src);
+            const clientName = roomForm.querySelector('.client-name');
+            const clientPhoneNumber = roomForm.querySelector('.client-phone-number');
+            const clientEmail = roomForm.querySelector('.client-email');
+            const clientCheckIn = roomForm.querySelector('#checkin_booking');
+            const clientCheckOut = roomForm.querySelector('#checkout_booking');
+            const clientAdults = roomForm.querySelector('.adults-number');
+            const clientChildren = roomForm.querySelector('.children-number');
+
+            clientName.value = null;
+            clientPhoneNumber.value = null;
+            clientEmail.value = null;
+
+            formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
+
+            submitBtn.onclick = function () {
+                while (clientInfo.length > 0) {
+                    clientInfo.pop();
+                }
+                clientInfo.push(
+                    clientName.value,
+                    clientPhoneNumber.value,
+                    clientEmail.value,
+                    clientCheckIn.value,
+                    clientCheckOut.value,
+                    clientAdults.value,
+                    clientChildren.value
+                );
+                console.log(clientInfo);
+                roomForm.style.display = "none";
+            }
+
             formTitle.textContent = typeOfRoom.textContent;
+            closeBtn.onclick = function () {
+                roomForm.style.display = "none";
+            }
         }
     }
 }

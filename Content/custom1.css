@@ -30,7 +30,7 @@ body > .container {
     right: 20px;
     display: none;
     border-radius: 50%;
-    box-shadow: 0px 0px 10px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 20px 0 rgba(0, 0, 0, 0.3);
     transition: .5s;
     cursor: pointer;
 }
@@ -297,7 +297,7 @@ body > .container {
     width: 750px;
     background-color: #fff;
     display: flex;
-    max-width: calc(100% - 32px);
+    max-width: calc(100% - 64px);
     border-radius: 12px;
     overflow: hidden;
     animation: modalFaceIn ease .8s;
@@ -307,8 +307,10 @@ body > .container {
     position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 48px 32px 32px;
+    padding: 48px 32px 24px;
+}
+.booking-room .form-group {
+    width: 100%;
 }
 
     .booking-room > i {
@@ -346,6 +348,10 @@ body > .container {
     }
 
         .booking-room .date input {
+            width: 100%;
+        }
+
+        .booking-room .date .form-group{
             width: 47%;
         }
 
@@ -366,9 +372,20 @@ body > .container {
             display: none;
         }
 
-    .booking-room .button-section {
-        width: 100px;
+    .booking-room form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .booking-room .submit-form-btn {
+        width: 200px;
         text-align: center;
+        padding: 9px 0px;
+        background: #000;
+        color: #fff;
+        cursor: pointer;
+        margin: 1rem 0 0;
     }
 
 .user-review {
