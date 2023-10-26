@@ -185,6 +185,10 @@ for (const bookBtn of bookBtns) {
             clientName.value = null;
             clientPhoneNumber.value = null;
             clientEmail.value = null;
+            clientCheckIn.value = null;
+            clientCheckOut.value = null;
+            clientAdults.value = null;
+            clientChildren.value = null;
 
             formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
 
@@ -192,17 +196,7 @@ for (const bookBtn of bookBtns) {
                 while (clientInfo.length > 0) {
                     clientInfo.pop();
                 }
-                clientInfo.push(
-                    clientName.value,
-                    clientPhoneNumber.value,
-                    clientEmail.value,
-                    clientCheckIn.value,
-                    clientCheckOut.value,
-                    clientAdults.value,
-                    clientChildren.value
-                );
-                console.log(clientInfo);
-                roomForm.style.display = "none";
+                //roomForm.style.display = "none";
             }
 
             formTitle.textContent = typeOfRoom.textContent;
