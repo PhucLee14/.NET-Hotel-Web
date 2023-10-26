@@ -9,8 +9,7 @@
     }
 
     function validate(inputElement, rule) {
-        //var errElement = getParent(inputElement,'.form-group');
-        var errorElement = inputElement.parentElement.querySelector('.form-message');
+        var errorElement = getParent(inputElement, options.formGroupSelector).querySelector(options.errorSelector);
         var errorMessage = rule.test(inputElement.value);
 
         if (errorMessage) {

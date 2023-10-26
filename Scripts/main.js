@@ -23,8 +23,8 @@ var counter = 1;
 
 
 
-window.onload = function () {
-    arrowLeftBtn.onclick = function () {
+window.onload = () => {
+    arrowLeftBtn.onclick = () => {
         counter--;
         if (counter < 1) {
             counter = 7;
@@ -33,7 +33,7 @@ window.onload = function () {
         console.log(counter);
     }
 
-    arrowRightBtn.onclick = function () {
+    arrowRightBtn.onclick = () => {
         counter++;
         if (counter > 7) {
             counter = 1;
@@ -41,7 +41,7 @@ window.onload = function () {
         document.getElementById('slide-radio' + counter).checked = true;
         console.log(counter);
     }
-    setInterval(function () {
+    setInterval(() => {
         document.getElementById('slide-radio' + counter).checked = true;
         counter++;
         if (counter > 7) {
@@ -164,7 +164,7 @@ const clientTemp = [];
 
 for (const bookBtn of bookBtns) {
     const clientInfo = [];
-    bookBtn.onclick = function (e) {
+    bookBtn.onclick = (e) => {
         roomForm.style.display = "flex";
         const roomNode = e.target.closest('.room');
         if (roomNode) {
@@ -192,36 +192,64 @@ for (const bookBtn of bookBtns) {
 
             formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
 
-            submitBtn.onclick = function () {
+            submitBtn.onclick = () => {
                 while (clientInfo.length > 0) {
                     clientInfo.pop();
                 }
-                //roomForm.style.display = "none";
+                clientInfo.push(
+                    clientName.value,
+                    clientPhoneNumber.value,
+                    clientEmail.value,
+                    clientCheckIn.value,
+                    clientCheckOut.value,
+                    clientAdults.value,
+                    clientChildren.value
+                );
+                var isNull = clientInfo.every((clientValue, index) => {
+                    return clientValue != "";
+                });
+                if (isNull) {
+                    roomForm.style.display = "none";
+                }
+                console.log(clientInfo);
+                console.log(isNull);
             }
 
             formTitle.textContent = typeOfRoom.textContent;
-            closeBtn.onclick = function () {
+            closeBtn.onclick = () => {
+                clientInfo.push(
+                    clientName.value,
+                    clientPhoneNumber.value,
+                    clientEmail.value,
+                    clientCheckIn.value,
+                    clientCheckOut.value,
+                    clientAdults.value,
+                    clientChildren.value
+                );
+                while (clientInfo.length > 0) {
+                    clientInfo.pop();
+                }
                 roomForm.style.display = "none";
             }
         }
     }
 }
 //check available room
-dateCheck1.addEventListener("change", function () {
+dateCheck1.addEventListener("change", () => {
     var date1Value = new Date(dateCheck1.value);
     dateCheck2.min = dateCheck1.value;
 });
-dateCheck2.addEventListener("change", function () {
+dateCheck2.addEventListener("change", () => {
     var date2Value = new Date(dateCheck2.value);
     dateCheck1.max = dateCheck2.value;
 });
 
 //check booking date
-dateBook1.addEventListener("change", function () {
+dateBook1.addEventListener("change", () => {
     var date1Value = new Date(dateBook1.value);
     dateBook2.min = dateBook1.value;
 });
-dateBook2.addEventListener("change", function () {
+dateBook2.addEventListener("change", () => {
     var date2Value = new Date(dateBook2.value);
     dateBook1.max = dateBook2.value;
 });
