@@ -10,10 +10,12 @@ const arrowLeftBtn = $('.arrow-left');
 const arrowRightBtn = $('.arrow-right');
 
 //room
+const roomContainer = $('.room-container');
 const roomList = $('.room-list');
 const roomForm = $('.room-form');
 const closeBtn = $('.close-btn');
 const submitBtn = $('.submit-form-btn');
+const closeEvents = $$('.close-btn, .room-form');
 
 var dateCheck1 = $("#checkin_date");
 var dateCheck2 = $("#checkout_date");
@@ -162,6 +164,10 @@ app.start();
 const bookBtns = $$('.js-book-btn');
 const clientTemp = [];
 
+function hideForm() {
+    roomForm.style.display = "none";
+}
+
 for (const bookBtn of bookBtns) {
     const clientInfo = [];
     bookBtn.onclick = (e) => {
@@ -210,37 +216,42 @@ for (const bookBtn of bookBtns) {
                     return clientValue != "";
                 });
                 if (isNull) {
-                    roomForm.style.display = "none";
+                    hideForm();
                 }
             }
 
             formTitle.textContent = typeOfRoom.textContent;
-            closeBtn.onclick = () => {
-                clientInfo.push(
-                    clientName.value,
-                    clientPhoneNumber.value,
-                    clientEmail.value,
-                    clientCheckIn.value,
-                    clientCheckOut.value,
-                    clientAdults.value,
-                    clientChildren.value
-                );
-                while (clientInfo.length > 0) {
-                    clientInfo.pop();
-                }
-                roomForm.style.display = "none";
-                const formGroups = bookingForm.querySelectorAll(".form-group");
-                const formMessages = bookingForm.querySelectorAll(".form-message");
+            closeEvents.forEach(closeEvent => {
+                closeEvent.addEventListener('click', () => {
+                    clientInfo.push(
+                        clientName.value,
+                        clientPhoneNumber.value,
+                        clientEmail.value,
+                        clientCheckIn.value,
+                        clientCheckOut.value,
+                        clientAdults.value,
+                        clientChildren.value
+                    );
+                    while (clientInfo.length > 0) {
+                        clientInfo.pop();
+                    }
+                    hideForm();
+                    const formGroups = bookingForm.querySelectorAll(".form-group");
+                    const formMessages = bookingForm.querySelectorAll(".form-message");
 
-                if (formGroups.length > 0) {
-                    formGroups.forEach(formGroup => {
-                        formGroup.classList.remove('invalid');
-                    })
-                    formMessages.forEach(formMessage => {
-                        formMessage.innerText = "";
-                    })
-                }
-            }
+                    if (formGroups.length > 0) {
+                        formGroups.forEach(formGroup => {
+                            formGroup.classList.remove('invalid');
+                        })
+                        formMessages.forEach(formMessage => {
+                            formMessage.innerText = "";
+                        })
+                    }
+                })
+            })
+            roomContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
         }
     }
 }
