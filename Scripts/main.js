@@ -19,9 +19,9 @@ var dateCheck1 = $("#checkin_date");
 var dateCheck2 = $("#checkout_date");
 var dateBook1 = $("#checkin_booking");
 var dateBook2 = $("#checkout_booking");
+
+const bookingForm = $("#booking-form");
 var counter = 1;
-
-
 
 window.onload = () => {
     arrowLeftBtn.onclick = () => {
@@ -193,6 +193,7 @@ for (const bookBtn of bookBtns) {
             formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
 
             submitBtn.onclick = () => {
+
                 while (clientInfo.length > 0) {
                     clientInfo.pop();
                 }
@@ -211,8 +212,6 @@ for (const bookBtn of bookBtns) {
                 if (isNull) {
                     roomForm.style.display = "none";
                 }
-                console.log(clientInfo);
-                console.log(isNull);
             }
 
             formTitle.textContent = typeOfRoom.textContent;
@@ -230,6 +229,17 @@ for (const bookBtn of bookBtns) {
                     clientInfo.pop();
                 }
                 roomForm.style.display = "none";
+                const formGroups = bookingForm.querySelectorAll(".form-group");
+                const formMessages = bookingForm.querySelectorAll(".form-message");
+
+                if (formGroups.length > 0) {
+                    formGroups.forEach(formGroup => {
+                        formGroup.classList.remove('invalid');
+                    })
+                    formMessages.forEach(formMessage => {
+                        formMessage.innerText = "";
+                    })
+                }
             }
         }
     }
