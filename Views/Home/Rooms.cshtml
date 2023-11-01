@@ -9,31 +9,14 @@
     <meta name="keywords" content="" />
     <meta name="author" content="" />
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
-
-    
 </head>
 <body>
 
-    <section class="site-hero inner-page overlay" style="background-image: url('@Url.Content("~/Images/hero_4.jpg")')" data-stellar-background-ratio="0.5">
-        <div class="container">
-        <div class="row site-hero-inner justify-content-center align-items-center">
-            <div class="col-md-10 text-center" data-aos="fade">
-                <h1 class="heading mb-3">Rooms</h1>
-                <ul class="custom-breadcrumbs mb-4">
-                    <li><a href="index.html">Home</a></li>
-                    <li>&bullet;</li>
-                    <li>Rooms</li>
-                </ul>
-            </div>
-        </div>
-        </div>
-
-        <a class="mouse smoothscroll" href="#next">
-            <div class="mouse-icon">
-                <span class="mouse-wheel"></span>
-            </div>
-        </a>
-    </section>
+    @{
+        ViewBag.Title = "Rooms";
+        ViewBag.Description = "Room";
+        Html.RenderPartial("~/Views/Shared/_BackgroundIntroPartial.cshtml");
+    }
     <!-- END section -->
 
     <section class="section pb-4">
@@ -103,7 +86,7 @@
         <div class="container">
 
             <div class="row room-list">
-                
+
             </div>
         </div>
     </section>
@@ -142,14 +125,14 @@
 
     <section class="section bg-image overlay" style="background-image: url('@Url.Content("~/Images/hero_4.jpg")');">
         <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
-                <h2 class="text-white font-weight-bold">A Best Place To Stay. Reserve Now!</h2>
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
+                    <h2 class="text-white font-weight-bold">A Best Place To Stay. Reserve Now!</h2>
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
+                    <a href="reservation.html" class="btn btn-outline-white-primary py-3 text-white px-5">Reserve Now</a>
+                </div>
             </div>
-            <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
-                <a href="reservation.html" class="btn btn-outline-white-primary py-3 text-white px-5">Reserve Now</a>
-            </div>
-        </div>
         </div>
     </section>
 
@@ -161,15 +144,15 @@
                 <form id="booking-form">
                     <h2>Room Type</h2>
                     <div class="form-group">
-                        <input type="text" class="client-name" id="client-name" name="client-name" placeholder="Input Your Name" >
+                        <input type="text" class="client-name" id="client-name" name="client-name" placeholder="Input Your Name">
                         <span class="form-message"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="client-phone-number" id="client-phone-number" name="client-phone-number" placeholder="Input Your Phone Number" >
+                        <input type="text" class="client-phone-number" id="client-phone-number" name="client-phone-number" placeholder="Input Your Phone Number">
                         <span class="form-message"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="client-email" id="client-email" name="client-email" placeholder="Input Your Email" >
+                        <input type="text" class="client-email" id="client-email" name="client-email" placeholder="Input Your Email">
                         <span class="form-message"></span>
                     </div>
                     <div class="date">
@@ -212,7 +195,7 @@
             errorSelector: '.form-message',
             rules: [
                 Validator.isRequired('#client-name', "Please enter your name"),
-                Validator.isPhoneNumber( '#client-phone-number'),
+                Validator.isPhoneNumber('#client-phone-number'),
                 Validator.isEmail('#client-email'),
                 Validator.isRequired('#checkin_booking', "Please enter check in date"),
                 Validator.isRequired('#checkout_booking', "Please enter check out date"),

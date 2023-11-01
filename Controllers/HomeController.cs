@@ -28,7 +28,7 @@ namespace WebApplication5.Controllers
             return View();
         }
 
-        public ActionResult Reservation()
+        public ActionResult Services()
         {
             return View();
         }

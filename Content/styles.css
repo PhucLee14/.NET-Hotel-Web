@@ -1606,6 +1606,8 @@ textarea.form-control {
 .custom-caption {
     font-size: 14px;
     letter-spacing: .2em;
+    font-weight: 700;
+    opacity: .5;
 }
 
 .bg-image {

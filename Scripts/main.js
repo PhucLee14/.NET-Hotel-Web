@@ -22,6 +22,8 @@ var dateCheck2 = $("#checkout_date");
 var dateBook1 = $("#checkin_booking");
 var dateBook2 = $("#checkout_booking");
 
+const serviceList = $(".services-list");
+
 const bookingForm = $("#booking-form");
 var counter = 1;
 
@@ -53,53 +55,83 @@ window.onload = () => {
 }
 
 const app = {
-    rooms: [
-        {
-            type: 'Single Room',
-            price: 100,
-            bedQuantity: 1,
-            bathQuantity: 1,
-            img:'../Images/img_1.jpg',
-        },
-        {
-            type: 'Family Room',
-            price: 200,
-            bedQuantity: 2,
-            bathQuantity: 2,
-            img: '../Images/img_2.jpg',
-        },
-        {
-            type: 'President Room',
-            price: 500,
-            bedQuantity: 4,
-            bathQuantity: 2,
-            img: '../Images/img_3.jpg',
-        },
-        {
-            type: 'Single Room',
-            price: 100,
-            bedQuantity: 1,
-            bathQuantity: 1,
-            img: '../Images/img_1.jpg',
-        },
-        {
-            type: 'Family Room',
-            price: 200,
-            bedQuantity: 2,
-            bathQuantity: 2,
-            img: '../Images/img_2.jpg',
-        },
-        {
-            type: 'President Room',
-            price: 500,
-            bedQuantity: 4,
-            bathQuantity: 2,
-            img: '../Images/img_3.jpg',
+    handleEvent: function () {
+        const _this = this;
+        document.onscroll = function () {
+            window.scrollY >= 180 ? navHeight.style.padding = "30px 0" : navHeight.style.padding = "60px 0";
+            if (window.scrollY >= 180) {
+                navHeight.style.backgroundColor = "rgba(0,0,0,0.5)";
+                navHeight.style.backdropFilter = "blur(6px)";
+            }
+            else {
+                navHeight.style.backgroundColor = "transparent";
+                navHeight.style.backdropFilter = "blur(0)";
+            }
+            scrollY >= 620 ? upBtn.style.display = "block" : upBtn.style.display = "none";
         }
-    ],
-    render: function () {
-        const roomslist = this.rooms.map(( room, index ) => {
-            return `
+
+        upBtn.onclick = function () {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    },
+
+    start: function () {
+        this.handleEvent();
+    }
+}
+
+app.start();
+
+if (roomList) {
+    const roomApp = {
+        rooms: [
+            {
+                type: 'Single Room',
+                price: 100,
+                bedQuantity: 1,
+                bathQuantity: 1,
+                img: '../Images/img_1.jpg',
+            },
+            {
+                type: 'Family Room',
+                price: 200,
+                bedQuantity: 2,
+                bathQuantity: 2,
+                img: '../Images/img_2.jpg',
+            },
+            {
+                type: 'President Room',
+                price: 500,
+                bedQuantity: 4,
+                bathQuantity: 2,
+                img: '../Images/img_3.jpg',
+            },
+            {
+                type: 'Single Room',
+                price: 100,
+                bedQuantity: 1,
+                bathQuantity: 1,
+                img: '../Images/img_1.jpg',
+            },
+            {
+                type: 'Family Room',
+                price: 200,
+                bedQuantity: 2,
+                bathQuantity: 2,
+                img: '../Images/img_2.jpg',
+            },
+            {
+                type: 'President Room',
+                price: 500,
+                bedQuantity: 4,
+                bathQuantity: 2,
+                img: '../Images/img_3.jpg',
+            }
+        ],
+        roomRender: function () {
+            const roomslist = this.rooms.map((room, index) => {
+                return `
                 <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
                     <div class="room">
                         <figure class="img-wrap">
@@ -129,100 +161,63 @@ const app = {
                     </div>
                 </div>
             `
-        })
-        roomList.innerHTML = roomslist.join("");
-    },
+            })
+            roomList.innerHTML = roomslist.join("");
+        },
 
-    handleEvent: function () {
-        const _this = this;
-        document.onscroll = function () {
-            window.scrollY >= 180 ? navHeight.style.padding = "30px 0" : navHeight.style.padding = "60px 0";
-            if (window.scrollY >= 180) {
-                navHeight.style.backgroundColor = "rgba(0,0,0,0.5)";
-                navHeight.style.backdropFilter = "blur(6px)";
-            }
-            else {
-                navHeight.style.backgroundColor = "transparent";
-                navHeight.style.backdropFilter = "blur(0)";
-            }
-            scrollY >= 620 ? upBtn.style.display = "block" : upBtn.style.display = "none";
+        start: function () {
+            this.roomRender();
         }
-
-        upBtn.onclick = function () {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-    },
-
-    start: function () {
-        this.handleEvent();
-        this.render();
     }
-}
-app.start();
+    roomApp.start();
 
-const bookBtns = $$('.js-book-btn');
-const clientTemp = [];
+    const bookBtns = $$('.js-book-btn');
 
-function hideForm() {
-    roomForm.style.display = "none";
-}
+    //check booking date
+    dateBook1.addEventListener("change", () => {
+        var date1Value = new Date(dateBook1.value);
+        dateBook2.min = dateBook1.value;
+    });
+    dateBook2.addEventListener("change", () => {
+        var date2Value = new Date(dateBook2.value);
+        dateBook1.max = dateBook2.value;
+    });
 
-for (const bookBtn of bookBtns) {
-    const clientInfo = [];
-    bookBtn.onclick = (e) => {
-        roomForm.style.display = "flex";
-        const roomNode = e.target.closest('.room');
-        if (roomNode) {
+    for (const bookBtn of bookBtns) {
+        const clientInfo = [];
+        bookBtn.onclick = (e) => {
+            roomForm.style.display = "flex";
+            const roomNode = e.target.closest('.room');
+            if (roomNode) {
 
-            const typeOfRoom = roomNode.querySelector('.room-type');
-            const imgPath = roomNode.querySelector('.img-fluid');
+                const typeOfRoom = roomNode.querySelector('.room-type');
+                const imgPath = roomNode.querySelector('.img-fluid');
 
-            const formTitle = roomForm.querySelector('h2')
-            const formImage = roomForm.querySelector('.room-thumb');
-            const clientName = roomForm.querySelector('.client-name');
-            const clientPhoneNumber = roomForm.querySelector('.client-phone-number');
-            const clientEmail = roomForm.querySelector('.client-email');
-            const clientCheckIn = roomForm.querySelector('#checkin_booking');
-            const clientCheckOut = roomForm.querySelector('#checkout_booking');
-            const clientAdults = roomForm.querySelector('.adults-number');
-            const clientChildren = roomForm.querySelector('.children-number');
+                const formTitle = roomForm.querySelector('h2')
+                const formImage = roomForm.querySelector('.room-thumb');
+                const clientName = roomForm.querySelector('.client-name');
+                const clientPhoneNumber = roomForm.querySelector('.client-phone-number');
+                const clientEmail = roomForm.querySelector('.client-email');
+                const clientCheckIn = roomForm.querySelector('#checkin_booking');
+                const clientCheckOut = roomForm.querySelector('#checkout_booking');
+                const clientAdults = roomForm.querySelector('.adults-number');
+                const clientChildren = roomForm.querySelector('.children-number');
 
-            clientName.value = null;
-            clientPhoneNumber.value = null;
-            clientEmail.value = null;
-            clientCheckIn.value = null;
-            clientCheckOut.value = null;
-            clientAdults.value = null;
-            clientChildren.value = null;
+                clientName.value = null;
+                clientPhoneNumber.value = null;
+                clientEmail.value = null;
+                clientCheckIn.value = null;
+                clientCheckOut.value = null;
+                clientAdults.value = null;
+                clientChildren.value = null;
 
-            formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
+                formImage.style.background = `url('${imgPath.src.slice(23)}') top center / cover no-repeat`;
 
-            submitBtn.onclick = () => {
+                submitBtn.onclick = () => {
 
-                while (clientInfo.length > 0) {
-                    clientInfo.pop();
-                }
-                clientInfo.push(
-                    clientName.value,
-                    clientPhoneNumber.value,
-                    clientEmail.value,
-                    clientCheckIn.value,
-                    clientCheckOut.value,
-                    clientAdults.value,
-                    clientChildren.value
-                );
-                var isNull = clientInfo.every((clientValue, index) => {
-                    return clientValue != "";
-                });
-                if (isNull) {
-                    hideForm();
-                }
-            }
-
-            formTitle.textContent = typeOfRoom.textContent;
-            closeEvents.forEach(closeEvent => {
-                closeEvent.addEventListener('click', () => {
+                    while (clientInfo.length > 0) {
+                        clientInfo.pop();
+                    }
                     clientInfo.push(
                         clientName.value,
                         clientPhoneNumber.value,
@@ -232,47 +227,98 @@ for (const bookBtn of bookBtns) {
                         clientAdults.value,
                         clientChildren.value
                     );
-                    while (clientInfo.length > 0) {
-                        clientInfo.pop();
+                    var isNull = clientInfo.every((clientValue, index) => {
+                        return clientValue != "";
+                    });
+                    if (isNull) {
+                        hideForm();
                     }
-                    hideForm();
-                    const formGroups = bookingForm.querySelectorAll(".form-group");
-                    const formMessages = bookingForm.querySelectorAll(".form-message");
+                }
 
-                    if (formGroups.length > 0) {
-                        formGroups.forEach(formGroup => {
-                            formGroup.classList.remove('invalid');
-                        })
-                        formMessages.forEach(formMessage => {
-                            formMessage.innerText = "";
-                        })
-                    }
+                formTitle.textContent = typeOfRoom.textContent;
+                closeEvents.forEach(closeEvent => {
+                    closeEvent.addEventListener('click', () => {
+                        clientInfo.push(
+                            clientName.value,
+                            clientPhoneNumber.value,
+                            clientEmail.value,
+                            clientCheckIn.value,
+                            clientCheckOut.value,
+                            clientAdults.value,
+                            clientChildren.value
+                        );
+                        while (clientInfo.length > 0) {
+                            clientInfo.pop();
+                        }
+                        hideForm();
+                        const formGroups = bookingForm.querySelectorAll(".form-group");
+                        const formMessages = bookingForm.querySelectorAll(".form-message");
+
+                        if (formGroups.length > 0) {
+                            formGroups.forEach(formGroup => {
+                                formGroup.classList.remove('invalid');
+                            })
+                            formMessages.forEach(formMessage => {
+                                formMessage.innerText = "";
+                            })
+                        }
+                    })
                 })
-            })
-            roomContainer.addEventListener('click', (e) => {
-                e.stopPropagation();
-            });
+                roomContainer.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
         }
     }
 }
-//check available room
-dateCheck1.addEventListener("change", () => {
-    var date1Value = new Date(dateCheck1.value);
-    dateCheck2.min = dateCheck1.value;
-});
-dateCheck2.addEventListener("change", () => {
-    var date2Value = new Date(dateCheck2.value);
-    dateCheck1.max = dateCheck2.value;
-});
 
-//check booking date
-dateBook1.addEventListener("change", () => {
-    var date1Value = new Date(dateBook1.value);
-    dateBook2.min = dateBook1.value;
-});
-dateBook2.addEventListener("change", () => {
-    var date2Value = new Date(dateBook2.value);
-    dateBook1.max = dateBook2.value;
-});
+const serviceApp = {
+    services: [
+        {
+            title: 'OUR RESTAURANT',
+            name: 'Dining & Drinks',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.',
+            img: '../Images/service1.png',
+            order: 1
+        },
+        {
+            title: 'OUR POOL',
+            name: 'Swimming Pool',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud.',
+            img: '../Images/service2.png',
+            order: 2,
+        },
+    ],
 
+    servicesRender: function () {
+        const serviceContainer = serviceList.querySelector(".container");
+        const servicesList = this.services.map((service, index) => {
+            const additionalClass = service.order === 2 ? "container-reverse" : "";
+            return `
+            <div class="container ${additionalClass}">
+                <div class="service-img col-6 col-lg-6" style="background-image: url('${service.img}')"></div>
+                <div class="service-info col-6 col-lg-6">
+                    <div class="service-title">${service.title}</div>
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-description">
+                        ${service.description}
+                    </div>
+                    <div class="service-detail-btn">Learn more</div>
+                </div>
+            </div>
+            `
+        })
+        serviceList.innerHTML = servicesList.join("");
+    },
 
+    start: function () {
+        this.servicesRender();
+    }
+}
+serviceApp.start();
+
+const clientTemp = [];
+
+function hideForm() {
+    roomForm.style.display = "none";
+}

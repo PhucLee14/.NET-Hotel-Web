@@ -217,7 +217,6 @@ body > .container {
 
 #slide-radio7:checked ~ .navigation-auto .auto-btn7 {
     background-color: #fff;
-    opacity: 1;
 }
 
 .room-type {
@@ -416,6 +415,81 @@ body > .container {
 .form-group.invalid .form-message {
     color: #f33a58;
 }
+
+.services-list {
+    margin: 80px 0;
+}
+
+.services-list .container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 800px;
+}
+
+.services-list .container-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.services-list .service-img {
+    height: 100%;
+}
+
+.services-list .service-info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    left: 40%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(252,252,252,.95);
+    padding: 64px;
+    border-radius: 8px;
+}
+
+.container-reverse .service-info {
+    right: 40%;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.services-list .service-info .service-title {
+    color: #0d6efd;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: "Playfair Display", times, serif;
+    padding: 8px 0;
+}
+
+.services-list .service-info .service-name {
+    padding: 16px 0 32px;
+    font-size: 1.8rem;
+    color: #000;
+}
+
+.services-list .service-info .service-detail-btn {
+    padding: 16px;
+    border: 1px solid #0d6efd;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    margin-top: 48px;
+    color: #0d6efd;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: linear .4s;
+}
+
+    .services-list .service-info .service-detail-btn:hover {
+        box-shadow: inset 300px 0 0 0 #0d6efd;
+        /* transition: ease-in-out .4s; */
+        color: #fff;
+    }
 
 @keyframes modalFaceIn {
     from {

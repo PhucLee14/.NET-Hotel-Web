@@ -203,6 +203,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\about_feature_image.png" />
+    <Content Include="Images\binhminhliec.png" />
     <Content Include="Images\food-1.jpg" />
     <Content Include="Images\hero_1.jpg" />
     <Content Include="Images\hero_2.jpg" />
@@ -221,6 +222,8 @@
     <Content Include="Images\person_3.jpg" />
     <Content Include="Images\person_4.jpg" />
     <Content Include="Images\round.png" />
+    <Content Include="Images\service1.png" />
+    <Content Include="Images\service2.png" />
     <Content Include="Images\slider-1.jpg" />
     <Content Include="Images\slider-2.jpg" />
     <Content Include="Images\slider-3.jpg" />
@@ -228,6 +231,9 @@
     <Content Include="Images\slider-5.jpg" />
     <Content Include="Images\slider-6.jpg" />
     <Content Include="Images\slider-7.jpg" />
+    <Content Include="Images\tanphatcuoibienthai.png" />
+    <Content Include="Images\tanphatthemgiadjt2.png" />
+    <Content Include="Images\tuongvi.jpg" />
     <Content Include="Images\user-1.png" />
     <Content Include="Images\user-2.png" />
     <Content Include="Images\user-3.png" />
@@ -250,6 +256,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\room.js" />
+    <Content Include="Scripts\service.js" />
     <Content Include="Scripts\validate.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -286,7 +294,10 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Rooms.cshtml" />
-    <Content Include="Views\Home\Reservation.cshtml" />
+    <Content Include="Views\Home\Services.cshtml" />
+    <Content Include="Views\Shared\_BannerPartial.cshtml" />
+    <Content Include="Views\Shared\_SliderPartial.cshtml" />
+    <Content Include="Views\Shared\_BackgroundIntroPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
