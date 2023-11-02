@@ -1,0 +1,26 @@
+﻿.navbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    width: calc(100% - 14rem);
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+}
+
+.sticky-footer {
+    
+}
+
+.render-body-section {
+    margin-top: 6rem;
+    margin-left: 14rem;
+    width: calc(100% - 14rem);
+}
+
+.sticky-footer {
+    margin-left: 14rem;
+}
