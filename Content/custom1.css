@@ -219,6 +219,10 @@ body > .container {
     background-color: #fff;
 }
 
+.avl-btn {
+    width: 100%;
+}
+
 .room-type {
     font-weight: 700;
     font-size: 1.4rem !important;
@@ -485,11 +489,11 @@ body > .container {
     transition: linear .4s;
 }
 
-    .services-list .service-info .service-detail-btn:hover {
-        box-shadow: inset 300px 0 0 0 #0d6efd;
-        /* transition: ease-in-out .4s; */
-        color: #fff;
-    }
+.services-list .service-info .service-detail-btn:hover {
+    box-shadow: inset 300px 0 0 0 #0d6efd;
+    /* transition: ease-in-out .4s; */
+    color: #fff;
+}
 
 @keyframes modalFaceIn {
     from {

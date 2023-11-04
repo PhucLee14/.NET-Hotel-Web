@@ -10,6 +10,12 @@ const arrowLeftBtn = $('.arrow-left');
 const arrowRightBtn = $('.arrow-right');
 
 //room
+const checkAvailableBtn = $('.avl-btn');
+var dateCheck1 = $("#checkin_date");
+var dateCheck2 = $("#checkout_date");
+const adultsQuantity = $('#adults');
+const childrenQuantity = $('#children');
+
 const roomContainer = $('.room-container');
 const roomList = $('.room-list');
 const roomForm = $('.room-form');
@@ -17,8 +23,6 @@ const closeBtn = $('.close-btn');
 const submitBtn = $('.submit-form-btn');
 const closeEvents = $$('.close-btn, .room-form');
 
-var dateCheck1 = $("#checkin_date");
-var dateCheck2 = $("#checkout_date");
 var dateBook1 = $("#checkin_booking");
 var dateBook2 = $("#checkout_booking");
 
@@ -27,31 +31,54 @@ const serviceList = $(".services-list");
 const bookingForm = $("#booking-form");
 var counter = 1;
 
-window.onload = () => {
-    arrowLeftBtn.onclick = () => {
-        counter--;
-        if (counter < 1) {
-            counter = 7;
+if (arrowLeftBtn) {
+    window.onload = () => {
+        arrowLeftBtn.onclick = () => {
+            counter--;
+            if (counter < 1) {
+                counter = 7;
+            }
+            document.getElementById('slide-radio' + counter).checked = true;
+            console.log(counter);
         }
-        document.getElementById('slide-radio' + counter).checked = true;
-        console.log(counter);
-    }
 
-    arrowRightBtn.onclick = () => {
-        counter++;
-        if (counter > 7) {
-            counter = 1;
+        arrowRightBtn.onclick = () => {
+            counter++;
+            if (counter > 7) {
+                counter = 1;
+            }
+            document.getElementById('slide-radio' + counter).checked = true;
+            console.log(counter);
         }
-        document.getElementById('slide-radio' + counter).checked = true;
-        console.log(counter);
+        setInterval(() => {
+            document.getElementById('slide-radio' + counter).checked = true;
+            counter++;
+            if (counter > 7) {
+                counter = 1;
+            }
+        }, 5000);
     }
-    setInterval(() => {
-        document.getElementById('slide-radio' + counter).checked = true;
-        counter++;
-        if (counter > 7) {
-            counter = 1;
-        }
-    }, 5000);
+}
+
+if (checkAvailableBtn) {
+
+    dateCheck1.addEventListener("change", () => {
+        var date1Value = new Date(dateCheck1.value);
+        dateCheck2.min = dateCheck1.value;
+    });
+    dateCheck2.addEventListener("change", () => {
+        var date2Value = new Date(dateCheck2.value);
+        dateCheck1.max = dateCheck2.value;
+    });
+    checkAvailableBtn.onclick = (e) => {
+        e.preventDefault();
+        const checkList = {};
+        checkList.checkin = dateCheck1.value;
+        checkList.checkout = dateCheck2.value;
+        checkList.adult = adultsQuantity.value;
+        checkList.children = childrenQuantity.value;
+        console.log(checkList);
+    }
 }
 
 const app = {

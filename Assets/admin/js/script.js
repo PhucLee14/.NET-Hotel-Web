@@ -119,7 +119,7 @@ if (guestTable) {
             const guestslist = this.guests.map((guest, index) => {
                 return `
                     <tr>
-                        <td>${index}</td>
+                        <td>${index+1}</td>
                         <td>${guest.name}</td>
                         <td>${guest.room}</td>
                         <td>${guest.phoneNumber}</td>
@@ -203,7 +203,7 @@ if (staffTable) {
             const staffslist = this.staffs.map((staff, index) => {
                 return `
                     <tr>
-                        <td>${index}</td>
+                        <td>${index+1}</td>
                         <td>${staff.name}</td>
                         <td>${staff.indentification}</td>
                         <td>${staff.phoneNumber}</td>
@@ -220,4 +220,86 @@ if (staffTable) {
         }
     }
     staffApp.start();
+}
+
+const familyRoomList = $('.family-room-list');
+if (familyRoomList) {
+    const roomApp = {
+        rooms: [
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+            {
+                roomStatus: 1,
+            },
+        ],
+
+        roomRender: function () {
+            const roomslist = this.rooms.map((room, index) => {
+                const status;
+                const icon;
+                const statusName;
+                if (room.roomStatus == 1) {
+                    status = 'primary';
+                    icon = 'minus';
+                    statusName = 'OCCUPIED ROOM';
+                } else if (room.roomStatus == 2) {
+                    status = 'success';
+                    icon = 'check';
+                    statusName = 'AVAILABLE ROOM';
+                } else if (room.roomStatus == 3) {
+                    status = 'danger';
+                    icon = 'xmark';
+                    statusName = 'ROOM OFF';
+                } else {
+                    status = 'warning';
+                    icon = 'exclamation';
+                    statusName = 'BOOK IN ADVANCE';
+                }
+                return `
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-${status} shadow h-100 py-2">
+                            <div class="room-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-${status} text-uppercase mb-1">
+                                            ${statusName}
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">P101</div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fa-solid fa-circle-${icon} fa-2x text-gray-300"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            })
+            familyRoomList.innerHTML = roomslist.join("");
+        },
+
+        start: function () {
+            this.roomRender();
+        }
+    }
+    roomApp.start();
 }

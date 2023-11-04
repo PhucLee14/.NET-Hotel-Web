@@ -17,6 +17,10 @@ namespace WebApplication5.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult RoomType()
+        {
+            return View();
+        }
         public ActionResult Guest()
         {
             return View();
