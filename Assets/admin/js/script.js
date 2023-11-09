@@ -230,49 +230,73 @@ if (familyRoomList) {
                 roomStatus: 1,
             },
             {
-                roomStatus: 1,
+                roomStatus: 2,
+            },
+            {
+                roomStatus: 3,
+            },
+            {
+                roomStatus: 4,
             },
             {
                 roomStatus: 1,
             },
             {
-                roomStatus: 1,
+                roomStatus: 2,
+            },
+            {
+                roomStatus: 3,
+            },
+            {
+                roomStatus: 4,
             },
             {
                 roomStatus: 1,
             },
             {
-                roomStatus: 1,
+                roomStatus: 2,
+            },
+            {
+                roomStatus: 3,
+            },
+            {
+                roomStatus: 4,
             },
             {
                 roomStatus: 1,
             },
             {
-                roomStatus: 1,
+                roomStatus: 2,
+            },
+            {
+                roomStatus: 3,
+            },
+            {
+                roomStatus: 4,
             },
         ],
 
         roomRender: function () {
             const roomslist = this.rooms.map((room, index) => {
-                const status;
-                const icon;
-                const statusName;
+                var status = "";
+                var icon = "";
+                var statusName = "";
                 if (room.roomStatus == 1) {
-                    status = 'primary';
-                    icon = 'minus';
-                    statusName = 'OCCUPIED ROOM';
+                    status = "primary";
+                    icon = "minus";
+                    statusName = "OCCUPIED ROOM";
                 } else if (room.roomStatus == 2) {
-                    status = 'success';
-                    icon = 'check';
-                    statusName = 'AVAILABLE ROOM';
+                    status = "success";
+                    icon = "check";
+                    statusName = "AVAILABLE ROOM";
                 } else if (room.roomStatus == 3) {
-                    status = 'danger';
-                    icon = 'xmark';
-                    statusName = 'ROOM OFF';
+                    status = "danger";
+                    icon = "xmark";
+                    statusName = "ROOM OFF";
                 } else {
-                    status = 'warning';
-                    icon = 'exclamation';
-                    statusName = 'BOOK IN ADVANCE';
+                    status = "warning";
+                    icon = "exclamation";
+                    statusName = "BOOK IN ADVANCE";
                 }
                 return `
                     <div class="col-xl-3 col-md-6 mb-4">
@@ -283,7 +307,7 @@ if (familyRoomList) {
                                         <div class="text-xs font-weight-bold text-${status} text-uppercase mb-1">
                                             ${statusName}
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">P101</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">P1${String(index).padStart(2, '0')} </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-circle-${icon} fa-2x text-gray-300"></i>

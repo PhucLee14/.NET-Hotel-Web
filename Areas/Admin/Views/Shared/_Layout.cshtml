@@ -44,7 +44,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Index">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/Home", new { area = "" })">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -57,31 +57,35 @@
                 </a>
                 <div id="collapseRoom" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Rooms">Rooms</a>
-                        <a class="collapse-item" href="RoomType">Room Type</a>
+                        <a class="collapse-item" href="@Url.Action("Rooms", "Admin/Home", new { area = "" })">
+                            <span>Rooms</span>
+                        </a>
+                        <a class="collapse-item" href="@Url.Action("RoomType", "Admin/Home", new { area = "" })">
+                            <span>Room Type</span>
+                        </a>
                     </div>
                 </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="Guest">
+            <li class="nav-item active"> 
+                <a class="nav-link" href="@Url.Action("Guest", "Admin/Home", new { area = "" })">
                     <i class="fa-regular fa-users"></i>
                     <span>Guest</span>
                 </a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="Staff">
+            <li class="nav-item active"> 
+                <a class="nav-link" href="@Url.Action("Staff", "Admin/Home", new { area = "" })">
                     <i class="fa-solid fa-user"></i>
                     <span>Staff</span>
                 </a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="Service">
+            <li class="nav-item active"> 
+                <a class="nav-link" href="@Url.Action("Service", "Admin/Home", new { area = "" })">
                     <i class="fa-solid fa-bell-concierge"></i>
                     <span>Service</span>
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="Invoice">
+                <a class="nav-link" href="@Url.Action("Invoice", "Admin/Home", new { area = "" })">
                     <i class="fa-regular fa-file-invoice"></i>
                     <span>Invoice</span>
                 </a>
@@ -94,22 +98,6 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            @*<li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                   aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
-            </li>*@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
