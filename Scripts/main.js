@@ -29,7 +29,17 @@ var dateBook2 = $("#checkout_booking");
 const serviceList = $(".services-list");
 
 const bookingForm = $("#booking-form");
+
+const bookingRoomForm = $(".booking-room-form");
 var counter = 1;
+const checkList = {
+    checkin: '',
+    checkout: '',
+    adult: 1,
+    children: 1,
+};
+
+console.log(checkList);
 
 if (arrowLeftBtn) {
     window.onload = () => {
@@ -72,13 +82,16 @@ if (checkAvailableBtn) {
     });
     checkAvailableBtn.onclick = (e) => {
         e.preventDefault();
-        const checkList = {};
         checkList.checkin = dateCheck1.value;
         checkList.checkout = dateCheck2.value;
         checkList.adult = adultsQuantity.value;
         checkList.children = childrenQuantity.value;
         console.log(checkList);
     }
+}
+
+if (bookingRoomForm) {
+    console.log(checkList);
 }
 
 const app = {

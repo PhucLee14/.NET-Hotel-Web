@@ -32,5 +32,10 @@ namespace WebApplication5.Controllers
         {
             return View();
         }
+
+        public ActionResult BookingRoom()
+        {
+            return View();
+        }
     }
 }

@@ -2145,6 +2145,9 @@
     <Content Include="Views\Shared\_BannerPartial.cshtml" />
     <Content Include="Views\Shared\_SliderPartial.cshtml" />
     <Content Include="Views\Shared\_BackgroundIntroPartial.cshtml" />
+    <Content Include="Views\Shared\_ReserveRecommend.cshtml" />
+    <Content Include="Views\Shared\_LayoutBookRoom.cshtml" />
+    <Content Include="Views\Home\BookingRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
