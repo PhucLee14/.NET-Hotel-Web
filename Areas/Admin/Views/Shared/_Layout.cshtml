@@ -57,23 +57,23 @@
                 </a>
                 <div id="collapseRoom" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Rooms", "Admin/Home", new { area = "" })">
+                        <a class="collapse-item" href="@Url.Action("Index", "Admin/Phong", new { area = "" })">
                             <span>Rooms</span>
                         </a>
-                        <a class="collapse-item" href="@Url.Action("RoomType", "Admin/Home", new { area = "" })">
+                        <a class="collapse-item" href="@Url.Action("Index", "Admin/LoaiPhong", new { area = "" })">
                             <span>Room Type</span>
                         </a>
                     </div>
                 </div>
             </li>
             <li class="nav-item active"> 
-                <a class="nav-link" href="@Url.Action("Guest", "Admin/Home", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/KhachHang", new { area = "" })">
                     <i class="fa-regular fa-users"></i>
                     <span>Guest</span>
                 </a>
             </li>
             <li class="nav-item active"> 
-                <a class="nav-link" href="@Url.Action("Staff", "Admin/Home", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/NhanViens", new { area = "" })">
                     <i class="fa-solid fa-user"></i>
                     <span>Staff</span>
                 </a>

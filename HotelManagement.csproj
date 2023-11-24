@@ -50,6 +50,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -170,6 +172,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KhachHangController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LoaiPhongController.cs" />
+    <Compile Include="Areas\Admin\Controllers\NhanViensController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PhongController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -177,8 +183,59 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChiTietHoaDonDichVu.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DichVu.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HoaDon.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HotelManagementModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManagementModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HotelManagementModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HotelManagementModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelManagementModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\KhachHang.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoaiPhong.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NhanVien.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PhieuThuePhong.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Phong.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaiKhoanKhachHang.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaiKhoanNhanVien.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ThuePhong.cs">
+      <DependentUpon>HotelManagementModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -1926,6 +1983,16 @@
     <Content Include="Images\user-1.png" />
     <Content Include="Images\user-2.png" />
     <Content Include="Images\user-3.png" />
+    <Content Include="Models\HotelManagementModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManagementModel.edmx</DependentUpon>
+      <LastGenOutput>HotelManagementModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\HotelManagementModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelManagementModel.edmx</DependentUpon>
+      <LastGenOutput>HotelManagementModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2091,6 +2158,33 @@
     <Content Include="Areas\Admin\Views\Home\Invoice.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Staff.cshtml" />
     <Content Include="Areas\Admin\Views\Home\RoomType.cshtml" />
+    <EntityDeploy Include="Models\HotelManagementModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HotelManagementModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\HotelManagementModel.edmx.diagram">
+      <DependentUpon>HotelManagementModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Admin\Views\NhanViens\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\NhanViens\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KhachHang\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Phong\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Phong\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Phong\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Phong\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Phong\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LoaiPhong\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LoaiPhong\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LoaiPhong\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LoaiPhong\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LoaiPhong\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2180,6 +2274,9 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
