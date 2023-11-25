@@ -48,9 +48,9 @@
             @Html.DisplayFor(modelItem => item.CCCD)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaNhanVien }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaNhanVien }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaNhanVien })
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaNhanVien }, new { @class = "acction-link" }) 
+            @Html.ActionLink("Details", "Details", new { id=item.MaNhanVien }, new { @class = "acction-link" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaNhanVien }, new { @class = "acction-link" })
         </td>
     </tr>
 }

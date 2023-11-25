@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm khách hàng", "Create")
 </p>
 <table class="table">
     <tr>
@@ -48,9 +48,9 @@
             @Html.DisplayFor(modelItem => item.CCCD)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaKhach }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaKhach }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaKhach })
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaKhach }, new {@class = "acction-link"})       
+            @Html.ActionLink("Details", "Details", new { id=item.MaKhach }, new { @class = "acction-link" })     
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaKhach }, new { @class = "acction-link" })
         </td>
     </tr>
 }

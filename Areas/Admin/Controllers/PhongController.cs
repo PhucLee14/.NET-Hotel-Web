@@ -112,9 +112,9 @@ namespace WebApplication5.Areas.Admin.Controllers
         // POST: Admin/Phong/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id) 
         {
-            Phong phong = db.Phongs.Find(id);
+            var phong = db.Phongs.Find(id);
             db.Phongs.Remove(phong);
             db.SaveChanges();
             return RedirectToAction("Index");

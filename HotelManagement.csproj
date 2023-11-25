@@ -1944,11 +1944,14 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\custom1.css" />
+    <Content Include="Content\main.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\about_feature_image.png" />
+    <Content Include="Images\bg-01.jpg" />
     <Content Include="Images\binhminhliec.png" />
     <Content Include="Images\food-1.jpg" />
     <Content Include="Images\hero_1.jpg" />

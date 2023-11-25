@@ -34,3 +34,18 @@
     min-height: 1px;
     padding: 3.25rem 0.25rem;
 }
+
+.acction-link {
+    color: #999;
+    padding: 0 16px;
+    text-decoration: none;
+}
+
+.acction-link:hover {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.table tbody th:first-child, td:first-child{
+    padding-left: 40px
+}

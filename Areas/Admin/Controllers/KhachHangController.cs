@@ -109,7 +109,7 @@ namespace WebApplication5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            KhachHang khachHang = db.KhachHangs.Find(id);
+            var khachHang = db.KhachHangs.Find(id);
             db.KhachHangs.Remove(khachHang);
             db.SaveChanges();
             return RedirectToAction("Index");

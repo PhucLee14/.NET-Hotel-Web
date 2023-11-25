@@ -13,13 +13,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.GiaLoaiPhong)
+            Giá loại phòng
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HinhAnh)
+            Hình ảnh
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TenLoaiPhong)
+           Tên Loại Phòng
         </th>
         <th></th>
     </tr>
@@ -36,9 +36,9 @@
             @Html.DisplayFor(modelItem => item.TenLoaiPhong)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaLoaiPhong }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaLoaiPhong }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaLoaiPhong })
+            @Html.ActionLink("Edit", "Edit", new { id=item.MaLoaiPhong }, new { @class = "acction-link" }) 
+            @Html.ActionLink("Details", "Details", new { id=item.MaLoaiPhong }, new { @class = "acction-link" }) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.MaLoaiPhong }, new { @class = "acction-link" })
         </td>
     </tr>
 }
