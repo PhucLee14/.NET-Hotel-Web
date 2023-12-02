@@ -1504,6 +1504,7 @@ textarea.form-control {
     .room .img-wrap {
         position: relative;
         overflow: hidden;
+        height: 280px;
     }
 
         .room .img-wrap img {
@@ -1514,6 +1515,8 @@ textarea.form-control {
             -ms-transform: scale(1);
             transform: scale(1);
             margin-bottom: 0 !important;
+            height: 100%;
+            width: 100%;
         }
 
             .room .img-wrap img:hover, .room:focus .img-wrap img {

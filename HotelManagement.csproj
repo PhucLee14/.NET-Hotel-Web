@@ -176,6 +176,8 @@
     <Compile Include="Areas\Admin\Controllers\LoaiPhongController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanViensController.cs" />
     <Compile Include="Areas\Admin\Controllers\PhongController.cs" />
+    <Compile Include="Areas\Registration\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Registration\RegistrationAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -1925,6 +1927,8 @@
     <Content Include="Assets\admin\vendor\jquery\jquery.min.js" />
     <Content Include="Assets\admin\vendor\jquery\jquery.slim.js" />
     <Content Include="Assets\admin\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="Assets\registration\css\style.css" />
+    <Content Include="Assets\registration\js\script.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\aos.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -1944,15 +1948,18 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\custom1.css" />
-    <Content Include="Content\main.css" />
+    <Content Include="Content\reservation.css" />
+    <Content Include="Images\standard.jpg" />
     <Content Include="Content\styles.css" />
-    <Content Include="Content\util.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\about_feature_image.png" />
     <Content Include="Images\bg-01.jpg" />
     <Content Include="Images\binhminhliec.png" />
+    <Content Include="Images\deluxe.jpg" />
+    <Content Include="Images\family-suite.jpg" />
+    <Content Include="Images\family.jpg" />
     <Content Include="Images\food-1.jpg" />
     <Content Include="Images\hero_1.jpg" />
     <Content Include="Images\hero_2.jpg" />
@@ -1980,8 +1987,12 @@
     <Content Include="Images\slider-5.jpg" />
     <Content Include="Images\slider-6.jpg" />
     <Content Include="Images\slider-7.jpg" />
+    <Content Include="Images\standard.png" />
+    <Content Include="Images\suite.jpg" />
+    <Content Include="Images\superior.jpg" />
     <Content Include="Images\tanphatcuoibienthai.png" />
     <Content Include="Images\tanphatthemgiadjt2.png" />
+    <Content Include="Images\thumbimg.png" />
     <Content Include="Images\tuongvi.png" />
     <Content Include="Images\user-1.png" />
     <Content Include="Images\user-2.png" />
@@ -2188,6 +2199,10 @@
     <Content Include="Areas\Admin\Views\LoaiPhong\Details.cshtml" />
     <Content Include="Areas\Admin\Views\LoaiPhong\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LoaiPhong\Index.cshtml" />
+    <Content Include="Areas\Registration\Views\web.config" />
+    <Content Include="Areas\Registration\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Registration\Views\Home\Index.cshtml" />
+    <Content Include="Assets\registration\img\hotelbackground.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2200,8 +2215,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\room.js" />
     <Content Include="Scripts\service.js" />
+    <Content Include="Scripts\toastmessage.js" />
     <Content Include="Scripts\validate.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -2249,6 +2264,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Registration\Data\" />
     <Folder Include="Views\Client\" />
   </ItemGroup>
   <ItemGroup>

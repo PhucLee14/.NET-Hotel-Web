@@ -18,10 +18,11 @@
         Html.RenderPartial("~/Views/Shared/_BackgroundIntroPartial.cshtml");
     }
     <!-- END section -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
+    <div id="toast"></div>
     <section class="section pb-4">
         <div class="container">
-
             <div class="row check-availabilty" id="next">
                 <div class="block-32" data-aos="fade-up" data-aos-offset="-200">
 
@@ -31,14 +32,14 @@
                                 <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                                 <div class="field-icon-wrap">
                                     <div class="icon"><span class="icon-calendar"></span></div>
-                                    <input type="date" id="checkin_date" class="form-control">
+                                    <input type="date" id="checkin_date" class="form-control" pattern="\d{4}-\d{2}-\d{2}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
                                 <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
                                 <div class="field-icon-wrap">
                                     <div class="icon"><span class="icon-calendar"></span></div>
-                                    <input type="date" id="checkout_date" class="form-control">
+                                    <input type="date" id="checkout_date" class="form-control" pattern="\d{4}-\d{2}-\d{2}">
                                 </div>
                             </div>
                             <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
@@ -102,18 +103,18 @@
             </div>
 
             <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="100">
-                <a href="#" class="image d-block bg-image-2" style="background-image: url('@Url.Content("~/Images/img_1.jpg")');"></a>
+                <a href="#" class="image d-block bg-image-2" style="background-image: url('@Url.Content("~/Images/family.jpg")');"></a>
                 <div class="text">
-                    <span class="d-block mb-4"><span class="display-4 text-primary">$199</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
+                    <span class="d-block mb-4"><span class="display-4 text-primary">750.000VND</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
                     <h2 class="mb-4">Family Room</h2>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                 </div>
             </div>
             <div class="site-block-half d-block d-lg-flex bg-white" data-aos="fade" data-aos-delay="200">
-                <a href="#" class="image d-block bg-image-2 order-2" style="background-image: url('@Url.Content("~/Images/img_2.jpg")');"></a>
+                <a href="#" class="image d-block bg-image-2 order-2" style="background-image: url('@Url.Content("~/Images/suite.jpg")');"></a>
                 <div class="text order-1">
-                    <span class="d-block mb-4"><span class="display-4 text-primary">$299</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
-                    <h2 class="mb-4">Presidential Room</h2>
+                    <span class="d-block mb-4"><span class="display-4 text-primary">1.250.000VND</span> <span class="text-uppercase letter-spacing-2">/ per night</span> </span>
+                    <h2 class="mb-4">Suite Room</h2>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
                 </div>
             </div>
@@ -121,7 +122,7 @@
         </div>
     </section>
 
-    <div class="room-form">
+    <!--<div class="room-form">
         <div class="room-container">
             <div class="room-thumb col-4 col-lg-4" style="background: url('@Url.Content("~/Images/img_1.jpg")') top center / cover no-repeat"></div>
             <div class="booking-room col-8 col-lg-8">
@@ -165,13 +166,13 @@
                                 <span class="form-message"></span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     @*<input src="#" type="submit" class="submit-form-btn" value="Submit">*@
-                    <button class="submit-form-btn">Submit</button>
+                    <!--<button class="submit-form-btn">Submit</button>
                 </form>
             </div>
         </div>
-    </div>
+    </div>-->
     <script src="~/Scripts/validate.js"></script>
     <script>
         Validator({
