@@ -22,8 +22,8 @@ namespace WebApplication5
 
             routes.MapRoute(
                 name: "AdminDefault",
-                url: "Admin/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                url: "Admin/{id}",
+                defaults: new { controller = "Home", id = UrlParameter.Optional },
                 namespaces: new[] { "YourNamespace.Controllers" }
             );
             

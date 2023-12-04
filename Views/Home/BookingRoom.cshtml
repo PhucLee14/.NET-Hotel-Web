@@ -47,7 +47,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <span class="form-label">Name <span class="required-icon">*</span></span>
-                                        <input class="form-control client-name" id="client-name" type="text" >
+                                        <input class="form-control client-name" id="client-name" type="text">
                                         <span class="form-message"></span>
                                     </div>
                                 </div>
@@ -56,14 +56,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span class="form-label">Phone Number <span class="required-icon">*</span></span>
-                                        <input class="form-control client-phone-number" id="client-phone-number" type="text" >
+                                        <input class="form-control client-phone-number" id="client-phone-number" type="text">
                                         <span class="form-message"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <span class="form-label">Email <span class="required-icon">*</span></span>
-                                        <input class="form-control client-email" id="client-email" type="text" >
+                                        <input class="form-control client-email" id="client-email" type="text">
                                         <span class="form-message"></span>
                                     </div>
                                 </div>
@@ -92,15 +92,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row selected-infor">
-                                <div class="col-md-6">
-                                    <p>Room type: <span id="type" style="font-weight: 700"></span></p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>Room Quantity: <span id="quantity" style="font-weight: 700"></span></p>
-                                </div>
-                                <p>Room detail: <span id="detail" style="font-weight: 100"></span></p>
+                            <div id="displayContainer">
+                                <div class="row selected-infor">
+                                    <div class="col-md-6">
+                                        <p>Room type: <span id="type" style="font-weight: 700"></span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Room Quantity: <span id="quantity" style="font-weight: 700"></span></p>
+                                    </div>
+                                    <p>Room detail: <span id="detail" style="font-weight: 100"></span></p>
 
+                                </div>
+                                <div class="row selected-infor">
+                                    <div class="col-md-12">
+                                        <p>Price: <span id="price" style="font-weight: 700"></span></p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row selected-infor">
                                 <div class="col-md-6">
@@ -108,11 +115,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <p>Check Out: <span id="checkout" style="font-weight: 700"></span></p>
-                                </div>
-                            </div>
-                            <div class="row selected-infor">
-                                <div class="col-md-12">
-                                    <p>Price: <span id="price" style="font-weight: 700"></span></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -138,21 +140,54 @@
             style: 'currency',
             currency: 'VND',
         });
+
         document.addEventListener('DOMContentLoaded', function () {
-            const type = localStorage.getItem('type');
-            const price = localStorage.getItem('price');
-            const detail = localStorage.getItem('detail');
+            // Lấy dữ liệu từ Local Storage
+            var storedData = localStorage.getItem('selectedRooms');
+
+            // Kiểm tra xem có dữ liệu hay không
+            if (storedData) {
+                // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
+                var selectedRooms = JSON.parse(storedData);
+
+                // Hiển thị dữ liệu trên trang
+                displaySelectedRooms(selectedRooms);
+            }
+        });
+
+        function displaySelectedRooms(selectedRooms) {
+            // Lấy phần tử trong DOM để hiển thị dữ liệu
+            var displayContainer = document.getElementById('displayContainer');
+
+            // Xóa nội dung cũ (nếu có)
+            displayContainer.innerHTML = '';
+
+            // Lặp qua danh sách các phòng đã chọn và hiển thị thông tin
+            selectedRooms.forEach(function (room) {
+                var roomInfoDiv = document.createElement('div');
+                roomInfoDiv.innerHTML = `
+                    <div class="row selected-infor">
+                        <div class="col-md-6">
+                            <p>Room type: <span id="type" style="font-weight: 700">${room.type}</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Room Quantity: <span id="quantity" style="font-weight: 700">${room.quantity}</span></p>
+                        </div>
+                        <p>Room detail: <span id="detail" style="font-weight: 100">${room.bedInfo}, Wifi</span></p>
+
+                    </div>
+                    <div class="row selected-infor">
+                        <div class="col-md-12">
+                            <p>Price: <span id="price" style="font-weight: 700">${room.price}</span></p>
+                        </div>
+                    </div>
+                    <hr>
+                `;
+                displayContainer.appendChild(roomInfoDiv);
+            });
+
             const checkin = localStorage.getItem('checkin');
             const checkout = localStorage.getItem('checkout');
-            const quantity = localStorage.getItem('quantity');
-
-            if (type) {
-                const parsedData1 = JSON.parse(type);
-                document.getElementById('type').innerText = `${parsedData1.data}`;
-            } else {
-                document.getElementById('type').innerText = 'No user data available for Data 1.';
-            }
-
             if (checkin) {
                 const parsedData2 = JSON.parse(checkin);
                 document.getElementById('checkin').innerText = `${parsedData2.data}`;
@@ -166,30 +201,43 @@
             } else {
                 document.getElementById('checkout').innerText = 'No user data available for Data 2.';
             }
+        }
 
-            if (detail) {
-                const parsedData4 = JSON.parse(detail);
-                document.getElementById('detail').innerText = `${parsedData4.data}` + ", Wifi";
-            } else {
-                document.getElementById('detail').innerText = 'No user data available for Data 2.';
-            }
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    const type = localStorage.getItem('selectedRooms');
+        //    const price = localStorage.getItem('selectedRooms');
+        //    const detail = localStorage.getItem('selectedRooms');
+        //    const quantity = localStorage.getItem('selectedRooms');
 
-            if (price) {
-                const parsedData5 = JSON.parse(price);
-                console.log(parsedData5.data);
-                console.log(VND.format(parsedData5.data));
-                document.getElementById('price').innerText = `${VND.format(parsedData5.data * 1000)}`;
-            } else {
-                document.getElementById('price').innerText = 'No user data available for Data 2.';
-            }
+        //    if (type) {
+        //        const parsedData1 = JSON.parse(type);
+        //        document.getElementById('type').innerText = `${parsedData1.type}`;
+        //    } else {
+        //        document.getElementById('type').innerText = 'No user data available for Data 1.';
+        //    }
 
-            if (quantity) {
-                const parsedData6 = JSON.parse(quantity);
-                document.getElementById('quantity').innerText = `${parsedData6.data}`;
-            } else {
-                document.getElementById('quantity').innerText = 'No user data available for Data 2.';
-            }
-        });
+
+        //    if (detail) {
+        //        const parsedData4 = JSON.parse(detail);
+        //        document.getElementById('detail').innerText = `${parsedData4.bedInfo}` + `${parsedData4.bathInfo}`;
+        //    } else {
+        //        document.getElementById('detail').innerText = 'No user data available for Data 2.';
+        //    }
+
+        //    if (price) {
+        //        const parsedData5 = JSON.parse(price);
+        //        document.getElementById('price').innerText = `${VND.format(parsedData5.price * 1000)}`;
+        //    } else {
+        //        document.getElementById('price').innerText = 'No user data available for Data 2.';
+        //    }
+
+        //    if (quantity) {
+        //        const parsedData6 = JSON.parse(quantity);
+        //        document.getElementById('quantity').innerText = `${parsedData6.quantity}`;
+        //    } else {
+        //        document.getElementById('quantity').innerText = 'No user data available for Data 2.';
+        //    }
+        //});
     </script>
     <script src="~/Scripts/validate.js"></script>
     <script>

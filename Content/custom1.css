@@ -1,4 +1,8 @@
-﻿.menu-toggle {
+﻿input, select, textarea {
+    max-width: 100%;
+}
+
+.menu-toggle {
     display: flex;
     text-align: center;
 }
@@ -300,6 +304,7 @@ body > .container {
     font-weight: 700;
     height: 100%;
     margin: 0;
+    text-align: center;
 }
 
 .fa-star {

@@ -1257,20 +1257,19 @@ textarea.form-control {
         right: 15px;
         z-index: 2;
     }
-
-    .field-icon-wrap select {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        width: 100%;
-    }
+.field-icon-wrap select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+}
 
 .block-32 {
     background: #fff;
     padding: 30px;
     -webkit-box-shadow: 0 2px 80px -10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 2px 80px -10px rgba(0, 0, 0, 0.2);
-    width: 100%;
+    width: 80vw;
 }
 
     .block-32 .field-icon-wrap {
