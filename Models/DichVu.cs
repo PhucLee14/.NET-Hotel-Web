@@ -20,9 +20,9 @@ namespace WebApplication5.Models
             this.ChiTietHoaDonDichVus = new HashSet<ChiTietHoaDonDichVu>();
         }
     
-        public int MaDichVu { get; set; }
+        public string MaDichVu { get; set; }
         public string TenDichVu { get; set; }
-        public Nullable<decimal> GiaDichVu { get; set; }
+        public decimal GiaDichVu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietHoaDonDichVu> ChiTietHoaDonDichVus { get; set; }

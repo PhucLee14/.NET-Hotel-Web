@@ -20,10 +20,10 @@ namespace WebApplication5.Models
             this.Phongs = new HashSet<Phong>();
         }
     
-        public int MaLoaiPhong { get; set; }
-        public Nullable<decimal> GiaLoaiPhong { get; set; }
-        public string HinhAnh { get; set; }
+        public string MaLoaiPhong { get; set; }
         public string TenLoaiPhong { get; set; }
+        public decimal GiaLoaiPhong { get; set; }
+        public string HinhAnh { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Phong> Phongs { get; set; }

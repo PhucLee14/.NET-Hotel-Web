@@ -14,11 +14,11 @@ namespace WebApplication5.Models
     
     public partial class ChiTietHoaDonDichVu
     {
-        public int MaHoaDon { get; set; }
-        public int MaDichVu { get; set; }
-        public Nullable<int> SoLuong { get; set; }
+        public byte SoLuong { get; set; }
+        public string MaHoaDon { get; set; }
+        public string MaDichVu { get; set; }
     
-        public virtual DichVu DichVu { get; set; }
         public virtual HoaDon HoaDon { get; set; }
+        public virtual DichVu DichVu { get; set; }
     }
 }

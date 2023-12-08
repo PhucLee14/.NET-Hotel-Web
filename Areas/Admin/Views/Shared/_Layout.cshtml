@@ -57,35 +57,35 @@
                 </a>
                 <div id="collapseRoom" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="@Url.Action("Index", "Admin/Phong", new { area = "" })">
+                        <a class="collapse-item" href="@Url.Action("Index", "Admin/Room", new { area = "" })">
                             <span>Rooms</span>
                         </a>
-                        <a class="collapse-item" href="@Url.Action("Index", "Admin/LoaiPhong", new { area = "" })">
+                        <a class="collapse-item" href="@Url.Action("Index", "Admin/RoomType", new { area = "" })">
                             <span>Room Type</span>
                         </a>
                     </div>
                 </div>
             </li>
             <li class="nav-item active"> 
-                <a class="nav-link" href="@Url.Action("Index", "Admin/KhachHang", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/Guest", new { area = "" })">
                     <i class="fa-regular fa-users"></i>
                     <span>Guest</span>
                 </a>
             </li>
             <li class="nav-item active"> 
-                <a class="nav-link" href="@Url.Action("Index", "Admin/NhanViens", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/Staff", new { area = "" })">
                     <i class="fa-solid fa-user"></i>
                     <span>Staff</span>
                 </a>
             </li>
             <li class="nav-item active"> 
-                <a class="nav-link" href="@Url.Action("Service", "Admin/Home", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/Service", new { area = "" })">
                     <i class="fa-solid fa-bell-concierge"></i>
                     <span>Service</span>
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="@Url.Action("Invoice", "Admin/Home", new { area = "" })">
+                <a class="nav-link" href="@Url.Action("Index", "Admin/Invoice", new { area = "" })">
                     <i class="fa-regular fa-file-invoice"></i>
                     <span>Invoice</span>
                 </a>

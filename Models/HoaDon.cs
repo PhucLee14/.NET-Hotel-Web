@@ -20,18 +20,18 @@ namespace WebApplication5.Models
             this.ChiTietHoaDonDichVus = new HashSet<ChiTietHoaDonDichVu>();
         }
     
-        public int MaHoaDon { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
-        public Nullable<decimal> TienPhong { get; set; }
+        public string MaHoaDon { get; set; }
+        public System.DateTime NgayLapHoaDon { get; set; }
+        public decimal TienPhong { get; set; }
         public Nullable<decimal> TienDichVu { get; set; }
-        public Nullable<int> MaKhach { get; set; }
-        public Nullable<int> MaNhanVien { get; set; }
-        public Nullable<int> MaPhieu { get; set; }
+        public int MaKhachHang { get; set; }
+        public int MaNhanVien { get; set; }
+        public int MaPhieu { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ChiTietHoaDonDichVu> ChiTietHoaDonDichVus { get; set; }
-        public virtual KhachHang KhachHang { get; set; }
         public virtual NhanVien NhanVien { get; set; }
-        public virtual PhieuThuePhong PhieuThuePhong { get; set; }
+        public virtual KhachHang KhachHang { get; set; }
+        public virtual PhieuThue PhieuThue { get; set; }
     }
 }

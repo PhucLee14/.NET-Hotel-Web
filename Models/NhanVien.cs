@@ -18,22 +18,21 @@ namespace WebApplication5.Models
         public NhanVien()
         {
             this.HoaDons = new HashSet<HoaDon>();
-            this.PhieuThuePhongs = new HashSet<PhieuThuePhong>();
-            this.TaiKhoanNhanViens = new HashSet<TaiKhoanNhanVien>();
+            this.PhieuThues = new HashSet<PhieuThue>();
         }
     
         public int MaNhanVien { get; set; }
-        public string HoTen { get; set; }
-        public Nullable<System.DateTime> NgaySinh { get; set; }
-        public string SoDienThoai { get; set; }
-        public string ChucDanh { get; set; }
         public string CCCD { get; set; }
+        public string SoDienThoai { get; set; }
+        public string TenNhanVien { get; set; }
+        public Nullable<System.DateTime> NgaySinh { get; set; }
+        public string ChucDanh { get; set; }
+        public string TenTaiKhoan { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual TaiKhoanNV TaiKhoanNV { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PhieuThuePhong> PhieuThuePhongs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TaiKhoanNhanVien> TaiKhoanNhanViens { get; set; }
+        public virtual ICollection<PhieuThue> PhieuThues { get; set; }
     }
 }

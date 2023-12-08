@@ -1,0 +1,35 @@
+﻿@model WebApplication5.Models.Phong
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Phong</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HienTrang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HienTrang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoaiPhong.TenLoaiPhong)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoaiPhong.TenLoaiPhong)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhong }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -14,27 +14,11 @@ namespace WebApplication5.Models
     
     public partial class PhieuThuePhong
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PhieuThuePhong()
-        {
-            this.HoaDons = new HashSet<HoaDon>();
-            this.ThuePhongs = new HashSet<ThuePhong>();
-        }
-    
         public int MaPhieu { get; set; }
-        public Nullable<System.DateTime> NgayLap { get; set; }
-        public Nullable<System.DateTime> ThoiGianNhan { get; set; }
-        public Nullable<System.DateTime> ThoiGianTra { get; set; }
-        public string HienTrang { get; set; }
-        public string HinhThucThue { get; set; }
-        public Nullable<int> MaKhach { get; set; }
-        public Nullable<int> MaNhanVien { get; set; }
+        public string MaPhong { get; set; }
+        public Nullable<byte> SoNguoiO { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
-        public virtual KhachHang KhachHang { get; set; }
-        public virtual NhanVien NhanVien { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThuePhong> ThuePhongs { get; set; }
+        public virtual PhieuThue PhieuThue { get; set; }
+        public virtual Phong Phong { get; set; }
     }
 }

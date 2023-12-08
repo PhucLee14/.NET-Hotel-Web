@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebApplication5.Models.Phong>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="row family-room-list">
+    @foreach (var item in Model)
+    {
+        @*<tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HienTrang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiPhong.TenLoaiPhong)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MaPhong }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong })
+                </td>
+            </tr>*@
+        if (item.HienTrang == true)
+        {
+            <div class="col-xl-3 col-md-6 mb-4 ">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="room-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    @Html.DisplayFor(modelItem => item.LoaiPhong.TenLoaiPhong)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(modelItem => item.MaPhong)</div>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.MaPhong }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong })
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-circle-minus fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (item.HienTrang == false)
+        {
+            <div class="col-xl-3 col-md-6 mb-4 ">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="room-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    @Html.DisplayFor(modelItem => item.LoaiPhong.TenLoaiPhong)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(modelItem => item.MaPhong)</div>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) |
+                                @Html.ActionLink("Details", "Details", new { id = item.MaPhong }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong })
+                            </div>
+                            <div class="col-auto">
+                                <i class="fa-solid fa-circle-xmark fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -17,15 +17,15 @@ namespace WebApplication5.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Phong()
         {
-            this.ThuePhongs = new HashSet<ThuePhong>();
+            this.PhieuThuePhongs = new HashSet<PhieuThuePhong>();
         }
     
-        public int MaPhong { get; set; }
-        public string HienTrang { get; set; }
-        public Nullable<int> MaLoaiPhong { get; set; }
+        public string MaPhong { get; set; }
+        public bool HienTrang { get; set; }
+        public string MaLoaiPhong { get; set; }
     
         public virtual LoaiPhong LoaiPhong { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ThuePhong> ThuePhongs { get; set; }
+        public virtual ICollection<PhieuThuePhong> PhieuThuePhongs { get; set; }
     }
 }
