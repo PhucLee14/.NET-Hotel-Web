@@ -179,6 +179,7 @@
     <Compile Include="Areas\Admin\Controllers\ServiceController.cs" />
     <Compile Include="Areas\Admin\Controllers\StaffController.cs" />
     <Compile Include="Areas\Registration\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Registration\Controllers\LoginController.cs" />
     <Compile Include="Areas\Registration\RegistrationAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookingController.cs" />
@@ -2214,6 +2215,8 @@
     <Content Include="Areas\Admin\Views\Invoice\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Invoice\Index.cshtml" />
+    <Content Include="Areas\Registration\Views\Login\Login.cshtml" />
+    <Content Include="Areas\Registration\Views\Login\Signup.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

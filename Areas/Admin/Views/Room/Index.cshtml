@@ -7,6 +7,20 @@
 
 <h2>Index</h2>
 
+@using (Html.BeginForm("Search", "Room", FormMethod.Get))
+{
+    <div class="input-group">
+        <div class="form-outline">
+
+            <label class="form-label" for="form1">Search</label>
+            @Html.TextBox("maPhong", null, new { @class = "form-control" })
+        </div>
+
+        <input type="submit" value=" Tìm " maPhong="maPhong" />
+    </div>
+}
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
