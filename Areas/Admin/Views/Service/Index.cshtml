@@ -7,6 +7,20 @@
 
 <h2>Index</h2>
 
+@using (Html.BeginForm("Search", "Service", FormMethod.Get))
+{
+    <div class="input-group">
+        <div class="form-outline">
+
+            <label class="form-label" for="form1">Search</label>
+            @Html.TextBox("tenDV", null, new { @class = "form-control" })
+        </div>
+
+        <input type="submit" value=" Tìm " tenDV="tenDV" />
+    </div>
+}
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -21,20 +35,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenDichVu)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GiaDichVu)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaDichVu }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaDichVu }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaDichVu })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenDichVu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaDichVu)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaDichVu }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaDichVu }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaDichVu })
+            </td>
+        </tr>
+    }
 
 </table>

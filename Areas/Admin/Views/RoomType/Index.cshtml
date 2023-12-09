@@ -7,6 +7,20 @@
 
 <h2>Index</h2>
 
+@using (Html.BeginForm("Search", "RoomType", FormMethod.Get))
+{
+    <div class="input-group">
+        <div class="form-outline">
+
+            <label class="form-label" for="form1">Search</label>
+            @Html.TextBox("tenLP", null, new { @class = "form-control" })
+        </div>
+
+        <input type="submit" value=" Tìm " tenLP="tenLP" />
+    </div>
+}
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -24,23 +38,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenLoaiPhong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.GiaLoaiPhong)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HinhAnh)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MaLoaiPhong }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MaLoaiPhong }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MaLoaiPhong })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenLoaiPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaLoaiPhong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HinhAnh)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiPhong }) |
+                @Html.ActionLink("Details", "Details", new { id = item.MaLoaiPhong }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.MaLoaiPhong })
+            </td>
+        </tr>
+    }
 
 </table>

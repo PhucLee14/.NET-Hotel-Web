@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication5.Models;
@@ -136,5 +137,14 @@ namespace WebApplication5.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [Route("Search")]
+        public async Task<ActionResult> Search(DateTime ngayDau, DateTime ngayCuoi)
+        {
+            var ketqua = await db.HoaDons.Where(hd => hd.NgayLapHoaDon >= ngayDau && hd.NgayLapHoaDon <= ngayCuoi).ToListAsync();
+
+            return View("Index",ketqua);
+        }
+
     }
 }
