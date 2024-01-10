@@ -5,9 +5,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using WebApplication5.Models;
+using HotelManagement.Models;
 
-namespace WebApplication5
+namespace HotelManagement
 {
     public partial class Startup
     {

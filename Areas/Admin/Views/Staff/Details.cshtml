@@ -1,67 +1,76 @@
-﻿@model WebApplication5.Models.NhanVien
+﻿@model HotelManagement.NhanVien
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="card-title title ml-32">Staff Detail</h2>
 
 <div>
-    <h4>NhanVien</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.CCCD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CCCD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SoDienThoai)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SoDienThoai)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TenNhanVien)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenNhanVien)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NgaySinh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ChucDanh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ChucDanh)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TaiKhoanNV.MatKhau)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaiKhoanNV.MatKhau)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenNhanVien)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TenNhanVien)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NgaySinh)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.NgaySinh)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SoDienThoai)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.SoDienThoai)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CCCD)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.CCCD)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ChucDanh)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ChucDanh)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaiKhoanNVs.First().TenTaiKhoan)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TaiKhoanNVs.First().TenTaiKhoan)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TaiKhoanNVs.First().MatKhau)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TaiKhoanNVs.First().MatKhau)
+            </td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaNhanVien }) |
+<p class="pl-12 ml-16 mt-32 mb-24">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaNhanVien }, new { @class = "create-btn" })
+</p>
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
 </p>

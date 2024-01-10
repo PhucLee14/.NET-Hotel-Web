@@ -75,28 +75,38 @@ Validator.isRequired = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
-            return value.trim() ? undefined : message || 'Please enter here';
+            return value.trim() ? undefined : message || 'Please enter this field';
         }
     }
 }
 
-Validator.isEmail = function (selector) {
+Validator.isEmail = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
             var regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            return regex.test(value) ? undefined : 'Please enter your email';
+            return regex.test(value) ? undefined : message || 'Please enter this field';
         }
     }
 }
 
-Validator.isPhoneNumber = function (selector) {
+Validator.isPhoneNumber = function (selector, message) {
     return {
         selector: selector,
         test: function (value) {
             var regex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-            return regex.test(value) ? undefined : 'Please enter your phone number';
+            return regex.test(value) ? undefined : message || 'Please enter this field';
         }
+    }
+}
+
+Validator.isAgeEnough = function (selector, message, birthday) {
+    return {
+        selector: selector,
+        test: function () {
+            return birthday >= 18 ? undefined : message || 'You must be at least 18 years old';
+        }
+
     }
 }
 

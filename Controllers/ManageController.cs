@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WebApplication5.Models;
+using HotelManagement.Models;
 
-namespace WebApplication5.Controllers
+namespace HotelManagement.Controllers
 {
     [Authorize]
     public class ManageController : Controller

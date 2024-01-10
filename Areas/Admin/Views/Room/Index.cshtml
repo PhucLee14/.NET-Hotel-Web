@@ -1,28 +1,28 @@
-﻿@model IEnumerable<WebApplication5.Models.Phong>
+﻿@model PagedList.IPagedList<HotelManagement.Phong>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="title title ml-32">Room List</h2>
 
-@using (Html.BeginForm("Search", "Room", FormMethod.Get))
+@using (Html.BeginForm("Search", "Room", FormMethod.Get, new { @class = "search-form" }))
 {
     <div class="input-group">
         <div class="form-outline">
 
-            <label class="form-label" for="form1">Search</label>
-            @Html.TextBox("maPhong", null, new { @class = "form-control" })
+            @Html.TextBox("maPhong", null, new { @class = "form-control bg-light border-0 small", @placeholder = "Search Room Number" })
         </div>
 
-        <input type="submit" value=" Tìm " maPhong="maPhong" />
+        <input type="submit" value=" Tìm " maPhong="maPhong" class="btn btn-primary" />
     </div>
 }
 
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="ml-32 mt-32 mb-24">
+    @Html.ActionLink("Add New", "Create", "Room", null, new { @class = "create-btn" })
 </p>
 <div class="row family-room-list">
     @foreach (var item in Model)
@@ -43,21 +43,21 @@
         if (item.HienTrang == true)
         {
             <div class="col-xl-3 col-md-6 mb-4 ">
-                <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card border-left-danger shadow h-100 py-2">
                     <div class="room-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <div class="row no-gutters align-items-center" style="margin-right: 0">
+                            <div class="col mr-2 df-flex-col">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1" style="font-size: 16px">
                                     @Html.DisplayFor(modelItem => item.LoaiPhong.TenLoaiPhong)
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(modelItem => item.MaPhong)</div>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.MaPhong }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong })
+                                <div class="df-flex-end">
+                                    @Html.ActionLink("Details", "Details", new { id = item.MaPhong.Trim() }, new { @class = "button-danger" })
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fa-solid fa-circle-minus fa-2x text-gray-300"></i>
-                            </div>
+                            @*<div class="col-auto">
+                                    <i class="fa-solid fa-circle-minus fa-2x text-gray-300"></i>
+                                </div>*@
                         </div>
                     </div>
                 </div>
@@ -66,25 +66,31 @@
         else if (item.HienTrang == false)
         {
             <div class="col-xl-3 col-md-6 mb-4 ">
-                <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card border-left-success shadow h-100 py-2">
                     <div class="room-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                        <div class="row no-gutters align-items-center" style="margin-right: 0">
+                            <div class="col mr-2 df-flex-col">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 16px">
                                     @Html.DisplayFor(modelItem => item.LoaiPhong.TenLoaiPhong)
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@Html.DisplayFor(modelItem => item.MaPhong)</div>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.MaPhong }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.MaPhong }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.MaPhong })
+                                <div class="df-flex-end">
+                                    @*@Html.ActionLink("Edit", "Edit", new { id = item.MaPhong.Trim() }, new { @class = "button-success-outline" })*@
+                                    @Html.ActionLink("Details", "Details", new { id = item.MaPhong.Trim() }, new { @class = "button-success" })
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fa-solid fa-circle-xmark fa-2x text-gray-300"></i>
-                            </div>
+                            @*<div class="col-auto">
+                                    <i class="fa-solid fa-circle-xmark fa-2x text-gray-300"></i>
+                                </div>*@
                         </div>
                     </div>
                 </div>
             </div>
         }
     }
+</div>
+</div>
+<!-- Hiển thị phân trang -->
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>

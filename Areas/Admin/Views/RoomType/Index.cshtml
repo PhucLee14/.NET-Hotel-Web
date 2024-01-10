@@ -1,61 +1,78 @@
-﻿@model IEnumerable<WebApplication5.Models.LoaiPhong>
+﻿﻿@model PagedList.IPagedList<HotelManagement.LoaiPhong>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="card-title title ml-32">Room Type List</h2>
 
-@using (Html.BeginForm("Search", "RoomType", FormMethod.Get))
+@using (Html.BeginForm("Search", "RoomType", FormMethod.Get, new { @class = "search-form" }))
 {
     <div class="input-group">
         <div class="form-outline">
 
-            <label class="form-label" for="form1">Search</label>
-            @Html.TextBox("tenLP", null, new { @class = "form-control" })
+            @Html.TextBox("tenLP", null, new { @class = "form-control bg-light border-0 small", @placeholder = "Search Room Category Name" })
         </div>
 
-        <input type="submit" value=" Tìm " tenLP="tenLP" />
+        <input type="submit" value=" Tìm " tenLP="tenLP" class="btn btn-primary" />
     </div>
 }
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="ml-32 mt-32 mb-24">
+    @Html.ActionLink("Add New", "Create", "RoomType", null, new { @class = "create-btn" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TenLoaiPhong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.GiaLoaiPhong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+<div class="table-section">
+    <table class="table room-type-list">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenLoaiPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiaLoaiPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HinhAnh)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiPhong }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaLoaiPhong }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaLoaiPhong })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TenLoaiPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().GiaLoaiPhong)
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.HinhAnh)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().SoNguoiToiDa)
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenLoaiPhong)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.GiaLoaiPhong)*@
+                    @{
+                        var giaLP = item.GiaLoaiPhong;
+                    }
+                    @String.Format("{0:#,##0}", giaLP).Replace(",", ".") VNĐ
+                </td>
+                @*<td>
+                    <img src="~/Assets/admin/img/@item.HinhAnh" style="width: 100px;" />
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoNguoiToiDa)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiPhong.Trim() })
+                    @Html.ActionLink("Details", "Details", new { id = item.MaLoaiPhong.Trim() })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<!-- Hiển thị phân trang -->
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

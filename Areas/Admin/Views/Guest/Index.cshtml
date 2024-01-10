@@ -1,22 +1,22 @@
-﻿@model IEnumerable<WebApplication5.Models.KhachHang>
+﻿@model PagedList.IPagedList<HotelManagement.KhachHang>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="card-title title ml-32">Guest List</h2>
 
-@using (Html.BeginForm("Search", "Guest", FormMethod.Get))
+@using (Html.BeginForm("Search", "Guest", FormMethod.Get, new { @class = "search-form" }))
 {
     <div class="input-group">
         <div class="form-outline">
 
-            <label class="form-label" for="form1">Search</label>
-            @Html.TextBox("name", null, new { @class = "form-control" })
+            @Html.TextBox("name", null, new { @class = "form-control bg-light border-0 small", @placeholder = "Search Guest Name" })
         </div>
 
-        <input type="submit" value=" Tìm " name="name" />
+        <input type="submit" value=" Tìm " name="name" class="btn btn-primary" />
     </div>
 }
 
@@ -26,59 +26,73 @@
     <input type="submit" value=" Tìm " name="name" />
 } -->
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="ml-32 mt-32 mb-24">
+    @Html.ActionLink("Add New", "Create", "Guest", null, new { @class = "create-btn" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CCCD)
-        </th>
-        <th>
-            Tên
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LoaiKhachHang)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoDienThoai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaiKhoanKH.MatKhau)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-section">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CCCD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenKhachHang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoaiKhachHang)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoDienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaiKhoanKH.MatKhau)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaKhachHang }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaKhachHang }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaKhachHang })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TenKhachHang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().SoDienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CCCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().LoaiKhachHang)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.TaiKhoanKHs.First().TenTaiKhoan)
+                </th>*@
+            <th>
+                Action
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenKhachHang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CCCD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LoaiKhachHang)
+                </td>
+                @*<td>
+                        @if (item.TaiKhoanKHs.Any())
+                        {
+                            @Html.DisplayFor(modelItem => item.TaiKhoanKHs.First().TenTaiKhoan)
+                        }
+                        else
+                        {
+                            @:N/A
+                        }
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaKhachHang })
+                    @Html.ActionLink("Details", "Details", new { id = item.MaKhachHang })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<!-- Hiển thị phân trang -->
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

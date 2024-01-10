@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace WebApplication5.Models
+namespace HotelManagement.Models
 {
     public class IndexViewModel
     {

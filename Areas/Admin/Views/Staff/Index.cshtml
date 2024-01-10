@@ -1,79 +1,80 @@
-﻿@model IEnumerable<WebApplication5.Models.NhanVien>
+﻿@model PagedList.IPagedList<HotelManagement.NhanVien>
+@using PagedList.Mvc;
+
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="card-title title ml-32">Staff List</h2>
 
-@using (Html.BeginForm("Search", "Staff", FormMethod.Get))
+@using (Html.BeginForm("Search", "Staff", FormMethod.Get, new { @class = "search-form" }))
 {
     <div class="input-group">
         <div class="form-outline">
 
-            <label class="form-label" for="form1">Search</label>
-            @Html.TextBox("name", null, new { @class = "form-control" })
+            @Html.TextBox("name", null, new { @class = "form-control bg-light border-0 small", @placeholder = "Search Staff Name" })
         </div>
 
-        <input type="submit" value=" Tìm " name="name" />
+        <input type="submit" value=" Tìm " name="name" class="btn btn-primary" />
     </div>
 }
 
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p class="ml-32 mt-32 mb-24">
+    @Html.ActionLink("Add New", "Create", "Staff", null, new { @class = "create-btn" })
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoDienThoai)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TenNhanVien)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NgaySinh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChucDanh)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaiKhoanNV.MatKhau)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<div class="table-section">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CCCD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoDienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenNhanVien)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChucDanh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaiKhoanNV.MatKhau)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.MaNhanVien }) |
-                @Html.ActionLink("Details", "Details", new { id = item.MaNhanVien }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.MaNhanVien })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TenNhanVien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgaySinh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().SoDienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().CCCD)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ChucDanh)
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenNhanVien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgaySinh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CCCD)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChucDanh)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaNhanVien })
+                    @Html.ActionLink("Details", "Details", new { id = item.MaNhanVien })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

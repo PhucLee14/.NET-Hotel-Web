@@ -1,43 +1,54 @@
-﻿@model WebApplication5.Models.LoaiPhong
+﻿@model HotelManagement.LoaiPhong
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="card-title title ml-32">Room Type Detail</h2>
 
 <div>
-    <h4>LoaiPhong</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenLoaiPhong)
-        </dt>
+    <div class="row m-32">
+        <div class="col-md-4">
+            <img src="@Url.Content("~/Assets/admin/img/" + Model.HinhAnh)" style="width: 100%; border-radius: 12px;" />
+        </div>
+        <table class="table col-md-7">
+            <tr class="row">
+                <th class="col-md-4" style="border-top: none">
+                    @Html.DisplayNameFor(model => model.TenLoaiPhong)
+                </th>
+                <td class="col-md-2" style="border-top: none">
+                    @Html.DisplayFor(model => model.TenLoaiPhong)
+                </td>
+            </tr>
+            <tr class="row">
+                <th class="col-md-4" style="border-top: none">
+                    @Html.DisplayNameFor(model => model.SoNguoiToiDa)
+                </th>
+                <td class="col-md-2" style="border-top: none">
+                    @Html.DisplayFor(model => model.SoNguoiToiDa)
+                </td>
+            </tr>
+            <tr class="row">
+                <th class="col-md-4" style="border-top: none">
+                    @Html.DisplayNameFor(model => model.GiaLoaiPhong)
+                </th>
+                <td class="col-md-2" style="border-top: none">
+                    @*@Html.DisplayFor(model => model.GiaLoaiPhong)*@
+                    @{
+                        var giaLP = Model.GiaLoaiPhong;
+                    }
+                    @String.Format("{0:#,##0}", giaLP).Replace(",", ".") VNĐ
+                </td>
+            </tr>
 
-        <dd>
-            @Html.DisplayFor(model => model.TenLoaiPhong)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaLoaiPhong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaLoaiPhong)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HinhAnh)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HinhAnh)
-        </dd>
-
-    </dl>
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaLoaiPhong }) |
+<p class="pl-12 ml-16 mt-32 mb-24">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaLoaiPhong }, new { @class = "create-btn" })
+</p>
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
 </p>

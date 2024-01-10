@@ -2,6 +2,9 @@
 @{
     Layout = null;
 }
+@{
+    var user = Session["User"] as HotelManagement.TaiKhoanKH;
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,8 +23,9 @@
     <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
 
     <!-- Custom stlylesheet -->
-    <link type="text/css" rel="stylesheet" href="~/Content/reservation.css" />
-    <link rel="stylesheet" href="~/Content/custom1.css"/>
+    <link type="text/css" rel="stylesheet" href="~/Content/Reservation.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/Loader.css" />
+    <link rel="stylesheet" href="~/Content/StyleCustom.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,55 +47,65 @@
                             <h1>Hotel Booking</h1>
                         </div>
                         <form id="booking-form">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <span class="form-label">Name <span class="required-icon">*</span></span>
-                                        <input class="form-control client-name" id="client-name" type="text">
-                                        <span class="form-message"></span>
+                            @if (user == null)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <span class="form-label">Phone Number <span class="required-icon">*</span></span>
+                                            <input class="form-control client-phone-number" id="client-phone-number" type="text">
+                                            <span class="form-message"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Phone Number <span class="required-icon">*</span></span>
-                                        <input class="form-control client-phone-number" id="client-phone-number" type="text">
-                                        <span class="form-message"></span>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Name <span class="required-icon">*</span></span>
+                                            <input class="form-control client-name" id="client-name" type="text">
+                                            <span class="form-message"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Age <span class="required-icon">*</span></span>
+                                            <input class="form-control client-age" id="client-age" type="date">
+                                            <span class="form-message"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Email <span class="required-icon">*</span></span>
-                                        <input class="form-control client-email" id="client-email" type="text">
-                                        <span class="form-message"></span>
+                            }
+                            else
+                            {
+                                var guestFullName = @user.KhachHang.TenKhachHang;
+                                DateTime ngaySinh = @user.KhachHang.NgaySinh;
+                                DateTime ngaySinhDate = ngaySinh.Date;
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <span class="form-label">Phone Number <span class="required-icon">*</span></span>
+                                            <input class="form-control client-phone-number" id="client-phone-number" type="text" value="@user.KhachHang.SoDienThoai">
+                                            <span class="form-message"></span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Adults</span>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Name <span class="required-icon">*</span></span>
+                                            <input class="form-control client-name" id="client-name" type="text" value="@user.KhachHang.TenKhachHang">
+                                            <span class="form-message"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <span class="form-label">Age <span class="required-icon">*</span></span>
+                                            <input class="form-control client-age" id="client-age" type="date" value="@ngaySinhDate.ToString("yyyy-MM-dd")">
+                                            <span class="form-message"> </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <span class="form-label">Children</span>
-                                        <select class="form-control">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                        </select>
-                                        <span class="select-arrow"></span>
-                                    </div>
-                                </div>
-                            </div>
+                            }
                             <div id="displayContainer">
                                 <div class="row selected-infor">
                                     <div class="col-md-6">
@@ -117,16 +131,11 @@
                                     <p>Check Out: <span id="checkout" style="font-weight: 700"></span></p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <span class="form-label">Additional comments </span>
-                                        <textarea class="form-control"></textarea>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-btn">
                                 <button class="submit-btn">Book Now</button>
+                            </div>
+                            <div class="form-btn" style=" text-align: center; margin-top: 24px; ">
+                                <a class="back-btn" href="Index">Back</a>
                             </div>
                         </form>
                     </div>
@@ -134,57 +143,338 @@
             </div>
         </div>
     </div>
-    <script src="~/Scripts/main.js"></script>
+    <div class="loader"></div>
+    <script src="~/Scripts/Loader.js"></script>
+    <script src="~/Scripts/Validate.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script>
+        var age = 0;
+        var roomIndex = 0;
+        var roomsList = [];
+        const birthDayInput = document.getElementById("client-age");
+        const submitBookBtn = document.getElementById("submit-book-btn");
+
+        function removeFormSubmit(formSelector) {
+            var form = document.querySelector(formSelector);
+            if (form) {
+                form.onsubmit = null;
+            }
+        }
+
+        var validateObj = {
+            form: '#booking-form',
+            formGroupSelector: '.form-group',
+            errorSelector: '.form-message',
+            rules: [
+                Validator.isRequired('#client-name', "Please enter your name"),
+                Validator.isPhoneNumber('#client-phone-number', "Please enter your phone number"),
+                Validator.isAgeEnough('#client-age', "You must be at least 18 years old", age)
+            ],
+            onSubmit: function (dataNumOfPeople) {
+                for (var i = 0; i < roomsList.length; ++i)
+                    dataNumOfPeople[i] = roomsList[i].value;
+                console.log(dataNumOfPeople);
+
+                $.ajax({
+                    url: '/Booking/AddBookRoom',
+                    type: 'GET',
+                    data: { listNumOfPeople: dataNumOfPeople },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                });
+                $.ajax({
+                    url: '/Booking/CreateBooking',
+                    type: 'POST',
+                    data: {
+                        phoneNumber: document.getElementById("client-phone-number").value,
+                        name: document.getElementById("client-name").value,
+                        birth: document.getElementById("client-age").value,
+                        checkIn: JSON.parse(localStorage.getItem('checkin')).data,
+                        checkOut: JSON.parse(localStorage.getItem('checkout')).data
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                });
+            }
+        }
+
+        if (@Json.Encode(user == null)) {
+            $(document).ready(function () {
+                Validator(validateObj);
+                // Sự kiện khi rời khỏi ô nhập số điện thoại
+                $("#client-phone-number").blur(function () {
+                    var phoneNumber = $(this).val();
+                    // Gửi yêu cầu kiểm tra số điện thoại đã tồn tại
+                    $.ajax({
+                        url: '/Booking/CheckPhoneNumber', // Thay đổi đường dẫn tương ứng với ứng dụng của bạn
+                        type: 'POST',
+                        data: { phoneNumber: phoneNumber },
+                        success: function (data) {
+                            // Xử lý kết quả từ máy chủ
+                            if (data.exists) {
+                                // Số điện thoại đã tồn tại trong db
+                                // Cập nhật tên khách hàng và đóng băng ô nhập số điện thoại
+                                $("#client-name").val(data.customerName);
+                                $("#client-name").prop('disabled', true);
+                                $("#client-name").css({
+                                    "opacity": "0.3"
+                                });
+                                // Cập nhật ngày sinh nếu có
+                                if (data.dateOfBirth) {
+                                    $("#client-age").val(data.dateOfBirth);
+                                    $("#client-age").prop('disabled', true);
+                                    $("#client-age").css({
+                                        "opacity": "0.3"
+                                    });
+                                }
+                                const birthdate = new Date(birthDayInput.value);
+
+                                const currentYear = new Date().getFullYear();
+
+                                const birthYear = birthdate.getFullYear();
+
+                                age = currentYear - birthYear;
+                                removeFormSubmit('#booking-form');
+                                Validator({
+                                    form: '#booking-form',
+                                    formGroupSelector: '.form-group',
+                                    errorSelector: '.form-message',
+                                    rules: [
+                                        Validator.isRequired('#client-name', "Please enter your name"),
+                                        Validator.isPhoneNumber('#client-phone-number', "Please enter your phone number"),
+                                        Validator.isAgeEnough('#client-age', "You must be at least 18 years old", age)
+                                    ],
+                                    onSubmit: function (dataNumOfPeople) {
+                                        for (var i = 0; i < roomsList.length; ++i)
+                                            dataNumOfPeople[i] = roomsList[i].value;
+                                        console.log(dataNumOfPeople);
+
+                                        $.ajax({
+                                            url: '/Booking/AddBookRoom',
+                                            type: 'GET',
+                                            data: { listNumOfPeople: dataNumOfPeople },
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                        });
+                                        $.ajax({
+                                            url: '/Booking/CreateBooking',
+                                            type: 'POST',
+                                            data: {
+                                                phoneNumber: document.getElementById("client-phone-number").value,
+                                                name: document.getElementById("client-name").value,
+                                                birth: document.getElementById("client-age").value,
+                                                checkIn: JSON.parse(localStorage.getItem('checkin')).data,
+                                                checkOut: JSON.parse(localStorage.getItem('checkout')).data
+                                            },
+                                            success: function (data) {
+                                                console.log(data);
+                                            },
+                                        });
+                                    }
+                                });
+                            } else {
+                                // Số điện thoại không tồn tại trong db
+                                $("#client-name").val("");
+                                $("#client-age").val("");
+
+                                $("#client-name").prop('disabled', false);
+                                $("#client-age").prop('disabled', false);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });
+        }
+        else {
+            Validator({
+                form: '#booking-form',
+                formGroupSelector: '.form-group',
+                errorSelector: '.form-message',
+                rules: [
+                    
+                ],
+                onSubmit: function (dataNumOfPeople) {
+                    for (var i = 0; i < roomsList.length; ++i)
+                        dataNumOfPeople[i] = roomsList[i].value;
+                    console.log(dataNumOfPeople);
+
+                    $.ajax({
+                        url: '/Booking/AddBookRoom',
+                        type: 'GET',
+                        data: { listNumOfPeople: dataNumOfPeople },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                    });
+                    $.ajax({
+                        url: '/Booking/CreateBooking',
+                        type: 'POST',
+                        data: {
+                            phoneNumber: document.getElementById("client-phone-number").value,
+                            name: document.getElementById("client-name").value,
+                            birth: document.getElementById("client-age").value,
+                            checkIn: JSON.parse(localStorage.getItem('checkin')).data,
+                            checkOut: JSON.parse(localStorage.getItem('checkout')).data
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                    });
+                }
+            });
+        }
+
+        $("#client-age").blur(function () {
+            const birthdate = new Date(birthDayInput.value);
+
+            const currentYear = new Date().getFullYear();
+
+            const birthYear = birthdate.getFullYear();
+
+            age = currentYear - birthYear;
+            console.log(age)
+            Validator({
+                form: '#booking-form',
+                formGroupSelector: '.form-group',
+                errorSelector: '.form-message',
+                rules: [
+                    Validator.isRequired('#client-name', "Please enter your name"),
+                    Validator.isPhoneNumber('#client-phone-number', "Please enter your phone number"),
+                    Validator.isAgeEnough('#client-age', "You must be at least 18 years old", age)
+                ],
+                onSubmit: function (dataNumOfPeople) {
+                    for (var i = 0; i < roomsList.length; ++i)
+                        dataNumOfPeople[i] = roomsList[i].value;
+                    console.log(dataNumOfPeople);
+
+                    $.ajax({
+                        url: '/Booking/AddBookRoom',
+                        type: 'GET',
+                        data: { listNumOfPeople: dataNumOfPeople },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                    });
+                    $.ajax({
+                        url: '/Booking/CreateBooking',
+                        type: 'POST',
+                        data: {
+                            phoneNumber: document.getElementById("client-phone-number").value,
+                            name: document.getElementById("client-name").value,
+                            birth: document.getElementById("client-age").value,
+                            checkIn: JSON.parse(localStorage.getItem('checkin')).data,
+                            checkOut: JSON.parse(localStorage.getItem('checkout')).data
+                        },
+                        success: function (data) {
+                            console.log(data);
+                        },
+                    });
+                }
+            });
+        });
+
+        const bd = document.querySelector("#client-age");
         const VND = new Intl.NumberFormat('vi-VN', {
             style: 'currency',
             currency: 'VND',
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            // Lấy dữ liệu từ Local Storage
             var storedData = localStorage.getItem('selectedRooms');
 
-            // Kiểm tra xem có dữ liệu hay không
             if (storedData) {
-                // Chuyển đổi chuỗi JSON thành đối tượng JavaScript
                 var selectedRooms = JSON.parse(storedData);
 
-                // Hiển thị dữ liệu trên trang
                 displaySelectedRooms(selectedRooms);
+
+                $.ajax({
+                    url: '/Booking/GetListRoomTypeID',
+                    type: 'GET',
+                    data: {},
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i++) {
+                            $.ajax({
+                                url: '/Booking/GetSoNguoiToiDaByRoomTypeID',
+                                type: 'GET',
+                                data: { maLoaiPhong: data[i] },
+                                success: function (data) {
+                                    $("#room-" + i).empty();
+                                    for (var j = 1; j <= data; j++) {
+                                        $("#room-" + i).append('<option>' + j + '</option>');
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 
         function displaySelectedRooms(selectedRooms) {
-            // Lấy phần tử trong DOM để hiển thị dữ liệu
             var displayContainer = document.getElementById('displayContainer');
 
-            // Xóa nội dung cũ (nếu có)
             displayContainer.innerHTML = '';
 
-            // Lặp qua danh sách các phòng đã chọn và hiển thị thông tin
+            var totalPrice = 0;
+            var distance = JSON.parse(localStorage.getItem('distance')).data;
             selectedRooms.forEach(function (room) {
+                totalPrice += parseInt(room.price * room.quantity * distance);
                 var roomInfoDiv = document.createElement('div');
                 roomInfoDiv.innerHTML = `
-                    <div class="row selected-infor">
-                        <div class="col-md-6">
-                            <p>Room type: <span id="type" style="font-weight: 700">${room.type}</span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Room Quantity: <span id="quantity" style="font-weight: 700">${room.quantity}</span></p>
-                        </div>
-                        <p>Room detail: <span id="detail" style="font-weight: 100">${room.bedInfo}, Wifi</span></p>
+                                        <div class="row selected-infor">
+                                            <div class="col-md-6">
+                                                <p>Room type: <span id="type" style="font-weight: 700">${room.type}</span></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Room Quantity: <span id="quantity" style="font-weight: 700">${room.quantity}</span></p>
+                                            </div>
+                                            <p>Room detail: <span id="detail" style="font-weight: 100">${room.bedInfo}, Wifi</span></p>
 
-                    </div>
-                    <div class="row selected-infor">
-                        <div class="col-md-12">
-                            <p>Price: <span id="price" style="font-weight: 700">${room.price}</span></p>
-                        </div>
-                    </div>
-                    <hr>
-                `;
+                                        </div>
+                                        <div class="row selected-infor">
+                                            <div class="col-md-12">
+                                                <p>Price: <span id="price" style="font-weight: 700">${VND.format(parseInt(room.price * room.quantity * distance))}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="row selected-infor guest-number">
+                                        </div>
+                                    `;
+                const guestNumber = roomInfoDiv.querySelector(".guest-number");
+                for (var i = 0; i < room.quantity; i++) {
+                    var roomType = room.type;
+                    if (roomType == "Family Suite") {
+                        roomType = "FamilySuite";
+                    }
+                    guestNumber.innerHTML += `
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <p>Room ${i + 1}</p>
+                                                <select id="room-${roomIndex}" class="rooms-list form-control">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                </select>
+                                                <span class="select-arrow"></span>
+                                            </div>
+                                        </div>
+                                    `
+                    roomIndex++;
+                }
+                roomInfoDiv.innerHTML += `
+                                        <hr/>
+                                    `
+
                 displayContainer.appendChild(roomInfoDiv);
             });
+            displayContainer.innerHTML += `
+                                        <p style="font-weight: 700; margin: 32px 0 24px;">Total price: ${VND.format(totalPrice)}</p>
+                                    `
 
             const checkin = localStorage.getItem('checkin');
             const checkout = localStorage.getItem('checkout');
@@ -201,59 +491,8 @@
             } else {
                 document.getElementById('checkout').innerText = 'No user data available for Data 2.';
             }
+            roomsList = document.querySelectorAll(".rooms-list");
         }
-
-        //document.addEventListener('DOMContentLoaded', function () {
-        //    const type = localStorage.getItem('selectedRooms');
-        //    const price = localStorage.getItem('selectedRooms');
-        //    const detail = localStorage.getItem('selectedRooms');
-        //    const quantity = localStorage.getItem('selectedRooms');
-
-        //    if (type) {
-        //        const parsedData1 = JSON.parse(type);
-        //        document.getElementById('type').innerText = `${parsedData1.type}`;
-        //    } else {
-        //        document.getElementById('type').innerText = 'No user data available for Data 1.';
-        //    }
-
-
-        //    if (detail) {
-        //        const parsedData4 = JSON.parse(detail);
-        //        document.getElementById('detail').innerText = `${parsedData4.bedInfo}` + `${parsedData4.bathInfo}`;
-        //    } else {
-        //        document.getElementById('detail').innerText = 'No user data available for Data 2.';
-        //    }
-
-        //    if (price) {
-        //        const parsedData5 = JSON.parse(price);
-        //        document.getElementById('price').innerText = `${VND.format(parsedData5.price * 1000)}`;
-        //    } else {
-        //        document.getElementById('price').innerText = 'No user data available for Data 2.';
-        //    }
-
-        //    if (quantity) {
-        //        const parsedData6 = JSON.parse(quantity);
-        //        document.getElementById('quantity').innerText = `${parsedData6.quantity}`;
-        //    } else {
-        //        document.getElementById('quantity').innerText = 'No user data available for Data 2.';
-        //    }
-        //});
-    </script>
-    <script src="~/Scripts/validate.js"></script>
-    <script>
-        Validator({
-            form: '#booking-form',
-            formGroupSelector: '.form-group',
-            errorSelector: '.form-message',
-            rules: [
-                Validator.isRequired('#client-name', "Please enter your name"),
-                Validator.isPhoneNumber('#client-phone-number'),
-                Validator.isEmail('#client-email')
-            ],
-            onSubmit: function (data) {
-                console.log(data);
-            }
-        })
     </script>
 </body>
 

@@ -1,0 +1,111 @@
+﻿﻿@model PagedList.IPagedList<HotelManagement.PhieuDangKy>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="card-title title ml-32">Registration Form List</h2>
+
+@using (Html.BeginForm("Search", "RegistrationForm", FormMethod.Get, new { @class = "search-form" }))
+{
+    <div class="input-group">
+        <div class="form-outline">
+            @Html.TextBox("sdt", null, new { @class = "form-control bg-light border-0 small", @placeholder = "Search Phone Number" })
+        </div>
+        <input type="submit" value=" Tìm " name="name" class="btn btn-primary" />
+    </div>
+}
+
+<div class="row button-list">
+    <p class="ml-32 mt-32 mb-24">
+        @Html.ActionLink("Add New", "Create", "RegistrationForm", null, new { @class = "create-btn" })
+    </p>
+    <ul class="mt-32 mb-24 ml-12">
+        <li>
+            <a class="create-btn-outline filter-list">Filter</a>
+            <ul class="filter-buttons">
+                <li>
+                    @Html.ActionLink("Chưa nhận phòng", "Index", new { filter = "ChuaNhanPhong" }, new { @class = "btn btn-info" })
+                </li>
+                <li>
+                    @Html.ActionLink("Đã nhận phòng", "Index", new { filter = "DaNhanPhong" }, new { @class = "btn btn-info" })
+                </li>
+                <li>
+                    @Html.ActionLink("Đã hủy phòng", "Index", new { filter = "DaHuyPhong" }, new { @class = "btn btn-info" })
+                </li>
+                <li>
+                    @Html.ActionLink("Đã trả phòng", "Index", new { filter = "DaTraPhong" }, new { @class = "btn btn-info" })
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="table-section">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().KhachHang.TenKhachHang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().KhachHang.SoDienThoai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ThoiGianNhanPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ThoiGianTraPhong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgayLap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().HienTrang)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KhachHang.TenKhachHang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KhachHang.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThoiGianNhanPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ThoiGianTraPhong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgayLap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HienTrang)
+                </td>
+                <td>
+                    @if (item.HienTrang == "Đã trả phòng" || item.HienTrang == "Đã hủy phòng")
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.MaPhieu })
+                    }
+                    else
+                    {
+                        @: @Html.ActionLink("Edit", "Edit", new { id = item.MaPhieu })
+                        @: @Html.ActionLink("Details", "Details", new { id = item.MaPhieu })
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<!-- Hiển thị phân trang -->
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, filter = ViewBag.Filter }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

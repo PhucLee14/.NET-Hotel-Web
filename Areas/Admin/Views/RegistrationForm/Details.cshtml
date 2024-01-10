@@ -1,0 +1,74 @@
+﻿@model HotelManagement.PhieuDangKy
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="card-title title ml-32">Registration Detail</h2>
+
+<div>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.TenKhachHang)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.KhachHang.TenKhachHang)
+            </td>
+        </tr>
+        @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.CCCD)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.KhachHang.CCCD)
+            </td>
+        </tr>*@
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.SoDienThoai)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.KhachHang.SoDienThoai)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayLap)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.NgayLap)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGianNhanPhong)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ThoiGianNhanPhong)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ThoiGianTraPhong)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.ThoiGianTraPhong)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HienTrang)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.HienTrang)
+            </td>
+        </tr>
+    </table>
+</div>
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

@@ -1,35 +1,40 @@
-﻿@model WebApplication5.Models.DichVu
+﻿@model HotelManagement.DichVu
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="card-title title ml-32">Service Detail</h2>
 
 <div>
-    <h4>DichVu</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TenDichVu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TenDichVu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GiaDichVu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GiaDichVu)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenDichVu)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.TenDichVu)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaDichVu)
+            </th>
+            <td>
+                @*@Html.DisplayFor(model => model.GiaDichVu)*@
+                @{
+                    var tienDV = Model.GiaDichVu;
+                }
+                @String.Format("{0:#,##0}", tienDV).Replace(",", ".") VNĐ
+            </td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDichVu }) |
+<p class="pl-12 ml-16 mt-32 mb-24">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaDichVu }, new { @class = "create-btn" })
+</p>
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
 </p>

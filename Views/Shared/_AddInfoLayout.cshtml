@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.2/css/all.css?fbclid=IwAR2TXqBPR1BwetsIfkcLDjYfw2kuhlxqmjkGdzKaCdAd6NkAkWniljGiVB8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="~/Assets/registration/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/registration/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Loader.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Account.css">
+
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-color: #DADAF1; ">
+            <div class="wrap-login100  width-60vw p-l-55 p-r-55 p-t-36 p-b-54" style="box-shadow: -20px 20px 50px rgba(76,65,153,.3); ">
+                <form class="login100-form validate-form" method="post">
+                    @RenderBody()
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <script src="~/Assets/registration/js/script.js"></script>
+
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/Loader.js")
+    @Scripts.Render("~/bundles/jqueryval")
+}

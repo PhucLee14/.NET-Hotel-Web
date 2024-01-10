@@ -1,0 +1,22 @@
+﻿.login100-form-title {
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.width-60vw {
+    width: 60vw !important;
+}
+
+.width-32p {
+    width: 32% !important;
+}
+
+.row .col-md-6 {
+    padding: 0 32px;
+}
+/*
+.row .col-md-6:first-child {
+    border-right: 1px solid #ccc;
+}*/

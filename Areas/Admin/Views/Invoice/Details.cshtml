@@ -1,67 +1,94 @@
-﻿@model WebApplication5.Models.HoaDon
+﻿@model HotelManagement.HoaDon
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="card-title title ml-32">Invoice @ViewBag.IDInvoice Detail</h2>
 
 <div>
-    <h4>HoaDon</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NgayLapHoaDon)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NgayLapHoaDon)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TienPhong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TienPhong)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TienDichVu)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TienDichVu)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.NhanVien.CCCD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NhanVien.CCCD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KhachHang.CCCD)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KhachHang.CCCD)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PhieuThue.HienTrang)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhieuThue.HienTrang)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.TenKhachHang)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.KhachHang.TenKhachHang)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.KhachHang.SoDienThoai)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.KhachHang.SoDienThoai)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaHoaDon)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.MaHoaDon)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NgayLapHoaDon)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.NgayLapHoaDon)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TienPhong)
+            </th>
+            <td>
+                @*@Html.DisplayFor(model => model.TienPhong)*@
+                @{
+                    var tienPhong = Model.TienPhong;
+                }
+                @String.Format("{0:#,##0}", tienPhong).Replace(",", ".") VNĐ
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TienDichVu)
+            </th>
+            <td>
+                @{
+                    var tienDV = Model.TienDichVu ?? 0;
+                }
+                @String.Format("{0:#,##0}", tienDV).Replace(",", ".") VNĐ
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Total Amount
+            </th>
+            <td>
+                @{
+                    var tongTien = Model.TienPhong + (Model.TienDichVu ?? 0);
+                }
+                @String.Format("{0:#,##0}", tongTien).Replace(",", ".") VNĐ
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NhanVien.TenNhanVien)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.NhanVien.TenNhanVien)
+            </td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaHoaDon }) |
+@*<p class="pl-12 ml-16 mt-32 mb-24">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaHoaDon }, new { @class = "create-btn" })
+</p>*@
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
 </p>

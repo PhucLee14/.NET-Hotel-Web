@@ -608,8 +608,6 @@ pre code {
 .col-xl-auto {
   position: relative;
   width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
 }
 
 .col {
@@ -4529,7 +4527,7 @@ input[type="button"].btn-block {
 }
 
 .card-title {
-  margin-bottom: 0.75rem;
+  margin-bottom: -0.5rem;
 }
 
 .card-subtitle {
@@ -6471,7 +6469,7 @@ button.bg-danger:focus {
 }
 
 .bg-light {
-  background-color: #f8f9fc !important;
+    background-color: #f0f2f9 !important
 }
 
 a.bg-light:hover, a.bg-light:focus,
@@ -10320,8 +10318,9 @@ a:focus {
 }
 
 .sidebar {
-  width: 6.5rem;
-  min-height: 100vh;
+    width: 6.5rem;
+    min-height: 100vh;
+    animation: 3s linear .1s colorIt;
 }
 
 .sidebar .nav-item {
@@ -10433,10 +10432,11 @@ a:focus {
   outline: none;
 }
 
-.sidebar.toggled {
-  width: 0 !important;
-  overflow: hidden;
-}
+    .sidebar.toggled {
+        width: 0 !important;
+        overflow: hidden;
+        animation: 3s linear .1s colorIt;
+    }
 
 .sidebar.toggled #sidebarToggle::after {
   content: '\f105';
@@ -10568,10 +10568,11 @@ a:focus {
   .sidebar .sidebar-heading {
     text-align: left;
   }
-  .sidebar.toggled {
-    overflow: visible;
-    width: 6.5rem !important;
-  }
+    .sidebar.toggled {
+        overflow: visible;
+        width: 6.5rem !important;
+        animation: 3s linear .1s colorIt;
+    }
   .sidebar.toggled .nav-item .collapse {
     position: absolute;
     left: calc(6.5rem + 1.5rem / 2);
@@ -10832,7 +10833,7 @@ a:focus {
 
 @media (min-width: 768px) {
   .chart-area {
-    height: 20rem;
+    height: 21rem;
   }
 }
 

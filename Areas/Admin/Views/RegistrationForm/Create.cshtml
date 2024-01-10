@@ -1,0 +1,207 @@
+﻿﻿@model HotelManagement.PhieuDangKy
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="card-title title ml-32">Add New Registration Form</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThoiGianNhanPhong, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ThoiGianNhanPhong, new { htmlAttributes = new { @class = "form-control", id = "checkIn" } })
+            @Html.ValidationMessageFor(model => model.ThoiGianNhanPhong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThoiGianTraPhong, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ThoiGianTraPhong, new { htmlAttributes = new { @class = "form-control", id = "checkOut" } })
+            @Html.ValidationMessageFor(model => model.ThoiGianTraPhong, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.KhachHang.SoDienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.KhachHang.SoDienThoai, new { htmlAttributes = new { @class = "form-control", Name = "phoneNumber", id = "phone-number" } })
+            @Html.ValidationMessage("phoneNumber", "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Rooms</label>
+        <table class="room-chosen table col-md-10">
+            <tr>
+                <th class="col-md-3">
+                    Room ID
+                </th>
+                <th class="col-md-3">
+                    Room Number
+                </th>
+                <th class="col-md-3">
+                    Quantity
+                </th>
+                <th class="col-md-1">
+
+                </th>
+            </tr>
+        </table>
+        <p class="btn btn-default add-btn col-md-10" id="add-room-btn">Add room</p>
+        <div class="add-room-form">
+            <div class="room-container">
+                <div class="booking-room col-12 col-lg-12">
+                    <i class="fa-solid fa-x close-btn"></i>
+                    <form id="booking-form">
+                        <h2 style="
+    margin-left: auto;
+    margin-right: auto;
+">
+                            Add Room Form
+                        </h2>
+                        <div class="form-group ml-0">
+                            <label class="control-label">Room Type</label>
+                            @Html.DropDownList("MaLoaiPhong", null, htmlAttributes: new { @class = "form-control room-id", @onchange = "getVal()", id = "roomType" })
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group ml-0">
+                            <label class="control-label">Room</label>
+                            @Html.DropDownList("DSPhong", null, htmlAttributes: new { @class = "form-control room-number", id = "roomNumber" })
+                            <span class="form-message"></span>
+                        </div>
+                        <div class="form-group ml-0">
+                            <label class="control-label">Client Quantity</label>
+                            <select class="form-control clien-quantity" id="Capacity">
+                                
+                            </select>
+                            <span class="form-message"></span>
+                        </div>
+                        <p class="submit-form-btn submit-room" style="
+    margin-left: auto;
+    margin-right: auto;
+">Submit</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-default create-btn">Create</button>
+        </div>
+    </div>
+</div>
+
+
+    <div class="pl-12 ml-16 mt-32 mb-24">
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+<script>
+    // Sự kiện khi giá trị của combobox "Room Type" thay đổi
+    function getVal() {
+        // Lấy giá trị đã chọn từ combobox "Room Type"
+        $.ajax({
+            url: '/RegistrationForm/GetRoomsByRoomTypeID',
+            type: 'GET',
+            data: { maLoaiPhong: $("#roomType").val(), checkIn: $("#checkIn").val(), checkOut: $("#checkOut").val() },
+            success: function (data) {
+
+                $("#roomNumber").empty();
+
+                // Thêm danh sách phòng mới vào combobox "Room"
+                for (var i = 0; i < data.length; i++) {
+                    $("#roomNumber").append('<option value="' + data[i] + '">' + data[i] + '</option>');
+                }
+            }
+        });
+        $.ajax({
+            url: '/RegistrationForm/GetSoNguoiToiDaByRoomTypeID',
+            type: 'GET',
+            data: { maLoaiPhong: $("#roomType").val() },
+            success: function (data) {
+
+                $("#Capacity").empty();
+
+                // Thêm danh sách phòng mới vào combobox "Room"
+                for (var i = 1; i <= data; i++) {
+                    $("#Capacity").append('<option value="' + i + '">' + i + '</option>');
+                }
+            }
+        });
+    }
+
+    //===================== Hàm Làm mới danh sách sách mượn =====================
+   function resetListPhong() {
+       $.ajax({
+           url: '@Url.Action("ResetListPhong", "RegistrationForm")',
+           type: 'POST',
+           //success: function (data) {
+           //    if (data.success) {
+           //        // Cập nhật giao diện
+           //        var danhSachSachMuon = document.getElementById("danhSachSachMuon");
+           //        danhSachSachMuon.innerHTML = "";
+
+           //        document.getElementById("MaThe").value = "";
+           //        document.getElementById("Name").value = "";
+           //        document.getElementById("SDT").value = "";
+           //        document.getElementById("HanTra").value = "-- Chọn hạn trả --";
+           //    }
+           //}
+       });
+   }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var dateCheckIn = document.getElementById("checkIn");
+        var dateCheckOut = document.getElementById("checkOut");
+        dateCheckOut.style.opacity = "0.3";
+        dateCheckOut.style.boxShadow = "none";
+
+        dateCheckOut.onclick = (e) => {
+            if (dateCheckIn.value == "") {
+                e.preventDefault();
+            }
+        }
+
+        dateCheckIn.onchange = () => {
+            dateCheckOut.style.opacity = "1";
+            var date = new Date(dateCheckIn.value);
+            date.setDate(date.getDate() + 1);
+            var formatDate = date.toISOString().split('T')[0];
+            dateCheckOut.min = formatDate;
+
+            var checkInValue = dateCheckIn.value;
+
+            if (checkInValue) {
+                var date1 = new Date(checkInValue);
+                date1.setDate(date1.getDate() + 1);
+                var formattedDate = date1.toISOString().split('T')[0];
+                dateCheckOut.value = formattedDate;
+            } else {
+                dateCheckOut.value = '';
+            }
+
+            console.clear;
+            console.log(dateCheckIn.value);
+        }
+
+        
+    });
+
+
+    //=====================  Xử lý khi load lại trang  =====================
+        document.addEventListener("DOMContentLoaded", function () {
+            resetListPhong();
+        });
+</script>

@@ -1,0 +1,119 @@
+﻿@model HotelManagement.PhieuDangKy
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="card-title title ml-32">Edit Registration Form</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.MaPhieu)
+    <div class="form-group">
+        @Html.LabelFor(model => model.HienTrang, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (Model.HienTrang == "Chưa nhận phòng")
+            {
+                var hienTrangOptions = new SelectList(new List<string> { "Đã nhận phòng", "Đã hủy phòng" });
+                @Html.DropDownListFor(model => model.HienTrang, hienTrangOptions, new { @class = "form-control" })
+            }
+            else
+            {
+                var hienTrangOptions = new SelectList(new List<string> { "Đã trả phòng" });
+                @Html.DropDownListFor(model => model.HienTrang, hienTrangOptions, new { @class = "form-control", @readonly = "readonly" })
+            }
+            @Html.ValidationMessageFor(model => model.HienTrang, "", new { @class = "text-danger" })
+        </div>
+        @Html.ValidationMessage("CustomError", new { @class = "text-danger" })
+    </div>
+
+    @if (Model.HienTrang == "Đã nhận phòng")
+    {
+        <div class="form-group">
+            <label class="control-label col-md-2">Services</label>
+            <table class="table col-md-10">
+            </table>
+            <table class="service-chosen table col-md-10">
+                <tr>
+                    <th class="col-md-5">
+                        Service Name
+                    </th>
+                    <th class="col-md-5">
+                        Service Quantity
+                    </th>
+                    <th class="col-md-2">
+
+                    </th>
+                </tr>
+            </table>
+            <p class="btn btn-default add-btn col-md-10" id="add-service-btn">Add service</p>
+            <div class="add-service-form">
+                <div class="service-container">
+                    <div class="booking-service col-12 col-lg-12">
+                        <i class="fa-solid fa-x close-btn"></i>
+                        <form id="booking-form">
+                            <h2 style="margin-left: auto; margin-right: auto;">Add Service Form</h2>
+                            <div class="form-group ml-0">
+                                <label class="control-label">Service Name</label>
+                                @Html.DropDownList("DichVu", null, htmlAttributes: new { @class = "form-control service-name" })
+                                @*@Html.DropDownListFor(model => model.PhieuThuePhongs, new SelectList(new List<string> { "Nhà Hàng", "Spa", "Hồ Bơi", "Gym", "Giặt, ủi" }), null, new { @class = "form-control service-name" })*@
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group ml-0">
+                                <label class="control-label">Service Quantity</label>
+                                <select class="form-control service-quantity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <span class="form-message"></span>
+                            </div>
+                            <p class="submit-form-btn submit-service" style="margin-left: auto; margin-right: auto;">Submit</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default create-btn" />
+        </div>
+    </div>
+</div>
+}
+
+<p class="ml-32 mt-32 mb-24 back-btn">
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<script>
+    //===================== Hàm Làm mới danh sách sách mượn =====================
+   function resetListService() {
+       $.ajax({
+           url: '@Url.Action("ResetListService", "RegistrationForm")',
+           type: 'POST',
+       });
+   }
+    //=====================  Xử lý khi load lại trang  =====================
+        document.addEventListener("DOMContentLoaded", function () {
+            resetListService();
+        });
+</script>
+

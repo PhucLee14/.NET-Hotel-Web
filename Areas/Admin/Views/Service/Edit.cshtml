@@ -1,18 +1,18 @@
-﻿@model WebApplication5.Models.DichVu
+﻿@model HotelManagement.DichVu
 
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2 class="card-title title ml-32">Edit Service</h2>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>DichVu</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.MaDichVu)
@@ -21,26 +21,28 @@
             @Html.LabelFor(model => model.TenDichVu, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TenDichVu, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenDichVu, "", new { @class = "text-danger" })
+                @*@Html.ValidationMessageFor(model => model.TenDichVu, "", new { @class = "text-danger" })*@
+                @Html.ValidationMessage("TenDichVu", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.GiaDichVu, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.GiaDichVu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.GiaDichVu, new { htmlAttributes = new { @class = "form-control", Value = Model.GiaDichVu.ToString("0.##") } })
                 @Html.ValidationMessageFor(model => model.GiaDichVu, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default create-btn" />
             </div>
         </div>
     </div>
 }
 
-<div>
+<p class="ml-32 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
-</div>
+</p>
+

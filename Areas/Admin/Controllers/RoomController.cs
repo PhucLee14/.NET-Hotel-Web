@@ -7,19 +7,25 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication5.Models;
+using HotelManagement;
+using PagedList;
 
-namespace WebApplication5.Areas.Admin.Controllers
+namespace HotelManagement.Areas.Admin.Controllers
 {
     public class RoomController : Controller
     {
         private Hotel_ManagementEntities db = new Hotel_ManagementEntities();
 
         // GET: Admin/Room
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            var phongs = db.Phongs.Include(p => p.LoaiPhong);
-            return View(phongs.ToList());
+            int pageNumber = (page ?? 1); // Số trang hiện tại, mặc định là 1 nếu không có
+            int PageSize = 12;
+
+            var phongs = db.Phongs.Include(p => p.LoaiPhong).OrderBy(p => p.MaPhong);
+            var pagedPhongs = phongs.ToPagedList(pageNumber, PageSize);
+
+            return View(pagedPhongs);
         }
 
         // GET: Admin/Room/Details/5
@@ -29,6 +35,8 @@ namespace WebApplication5.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            ViewBag.ID = id;
             Phong phong = db.Phongs.Find(id);
             if (phong == null)
             {
@@ -49,8 +57,14 @@ namespace WebApplication5.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MaPhong,HienTrang,MaLoaiPhong")] Phong phong)
+        //public ActionResult Create([Bind(Include = "MaPhong/*,HienTrang*/,MaLoaiPhong")] Phong phong)
+        public ActionResult Create([Bind(Include = "MaPhong,MaLoaiPhong")] Phong phong)
         {
+            var existingRoom = db.Phongs.FirstOrDefault(p => p.MaPhong == phong.MaPhong);
+            if (existingRoom != null)
+            {
+                ModelState.AddModelError("roomCode", "Mã phòng đã tồn tại.");
+            }
             if (ModelState.IsValid)
             {
                 db.Phongs.Add(phong);
@@ -83,6 +97,7 @@ namespace WebApplication5.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "MaPhong/*,HienTrang*/,MaLoaiPhong")] Phong phong)
         public ActionResult Edit([Bind(Include = "MaPhong,HienTrang,MaLoaiPhong")] Phong phong)
         {
             if (ModelState.IsValid)
@@ -131,12 +146,21 @@ namespace WebApplication5.Areas.Admin.Controllers
         }
 
         [Route("Search")]
-        public async Task<ActionResult> Search(string maPhong)
+        public async Task<ActionResult> Search(string maPhong, int? page)
         {
-            var ketqua = await db.Phongs.Where(p => p.MaPhong.ToLower().Contains(maPhong.ToLower())).ToListAsync();
+            int pageNumber = (page ?? 1); // Số trang hiện tại, mặc định là 1 nếu không có
+            int PageSize = 12;
 
-            return View("Index", ketqua);
+            IQueryable<Phong> query = db.Phongs;
+
+            if (!string.IsNullOrEmpty(maPhong))
+            {
+                query = query.Where(p => p.MaPhong.ToLower().Contains(maPhong.ToLower()));
+            }
+
+            var phongs = query.OrderBy(p => p.MaPhong).ToPagedList(pageNumber, PageSize);
+
+            return View("Index", phongs);
         }
-
     }
 }

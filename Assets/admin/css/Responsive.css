@@ -1,0 +1,72 @@
+﻿/* PC */
+@media(min-width: 64em) {
+}
+
+/* PC & Tablet */
+@media(min-width: 46.25em) {
+    body.sidebar-toggled .render-body-section {
+        margin-left: 7rem;
+        width: calc(100% - 6rem);
+    }
+}
+
+/* Tablet */
+@media(min-width: 46.25em) and (max-width:63.9375em) {
+}
+
+/* Mobile */
+@media(max-width: 46.1875em) {
+
+    #content {
+        height: 100vh;
+        position: relative;
+    }
+
+    .back-btn {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .render-body-section {
+        margin-left: 0;
+        width: 100%;
+    }
+    .render-body-section > p{
+        width: 100vw;
+        margin: 16px 12px 24px;
+    }
+    .render-body-section > p > a {
+        width: calc(100% - 24px);
+        display: block;
+        text-align: center;
+    }
+        
+    .search-form {
+        margin-top: 60px;
+        display: none;
+        margin-left: calc(1.25rem - 6px) !important;
+    }
+
+    .search-form .input-group{
+        border-radius: 4px;
+        background-color: #fff;
+        padding: 12px;
+    }
+
+    .search-form .form-control {
+        width: 68vw;
+    }
+
+    .card {
+        margin-right: 0;
+    }
+
+    .card-title {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .create-btn {
+        width: 100%;
+    }
+}

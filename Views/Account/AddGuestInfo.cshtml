@@ -1,0 +1,106 @@
+﻿@model HotelManagement.KhachHang
+
+@{
+    ViewBag.Title = "Information";
+    Layout = "~/Views/Shared/_AddInfoLayout.cshtml";
+}
+
+@*<h2>AddGuestInfo</h2>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>KhachHang</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CCCD, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CCCD, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CCCD, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenKhachHang, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenKhachHang, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenKhachHang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NgaySinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NgaySinh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NgaySinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SoDienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }*@
+
+<span class="login100-form-title p-b-49">
+    @ViewBag.Title
+</span>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="wrap-input100 validate-input" data-validate="Username is reauired">
+                <span class="label-input100">Name</span>
+                @Html.TextBoxFor(m => m.TenKhachHang, new { @class = "input100", placeholder = "Type your name" })
+                <i class="fa-solid fa-user input-icon"></i>
+            </div>
+            @Html.ValidationMessageFor(m => m.TenKhachHang, "", new { @class = "text-danger" })
+            <label class="text-danger">@ViewBag.DuplicateMessage</label>
+
+            <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                <span class="label-input100">Phone Number</span>
+                @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "input100", placeholder = "Type your phone number" })
+                <i class="fa-solid fa-phone input-icon"></i>
+            </div>
+            @Html.ValidationMessageFor(m => m.SoDienThoai, "", new { @class = "text-danger" })
+
+            <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                <span class="label-input100">Birthday</span>
+                @Html.TextBoxFor(m => m.NgaySinh, new { @class = "input100", placeholder = "Type your birthday", type = "date" })
+                <i class="fa-solid fa-calendar input-icon"></i>
+            </div>
+            @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger" })
+
+            <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                <span class="label-input100">Identification Number</span>
+                @Html.TextBoxFor(m => m.CCCD, new { @class = "input100", placeholder = "Type your identification number" })
+                <i class="fa-solid fa-book input-icon"></i>
+            </div>
+            @Html.ValidationMessageFor(m => m.CCCD, "", new { @class = "text-danger" })
+            <div class="container-login100-form-btn m-t-24">
+                <div class="wrap-login100-form-btn">
+                    <div class="login100-form-bgbtn"></div>
+                    <button class="login100-form-btn" type="submit" style="background-color: #7867F1;">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

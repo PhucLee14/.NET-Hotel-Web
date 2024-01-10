@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.2/css/all.css?fbclid=IwAR2TXqBPR1BwetsIfkcLDjYfw2kuhlxqmjkGdzKaCdAd6NkAkWniljGiVB8">
-    <title>@ViewBag.Title Hotel Management</title>
+    <title> Hotel Management</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap.min.css")
-    @Styles.Render("~/Content/styles.css")
-    @Styles.Render("~/Content/custom1.css")
+    @Styles.Render("~/Content/Style.css")
+    @Styles.Render("~/Content/StyleCustom.css")
+    @Styles.Render("~/Content/Loader.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -26,7 +27,7 @@
                     </div>
                     <div class="col-3 col-lg-3 site-logo" data-aos="fade">
                         <a>
-                            @Html.ActionLink("Rooms", "Index", "Booking", new { area = "" }, new { @class = "menu-link" })
+                            @Html.ActionLink("Room", "Index", "Booking", new { area = "" }, new { @class = "menu-link" })
                         </a>
                     </div>
                     <div class="col-3 col-lg-3 site-logo" data-aos="fade">
@@ -36,7 +37,7 @@
                     </div>
                     <div class="col-3 col-lg-3 site-logo" data-aos="fade">
                         <a>
-                            @Html.ActionLink("Services", "Services", "Home", new { area = "" }, new { @class = "menu-link" })
+                            @Html.ActionLink("Service", "Service", "Home", new { area = "" }, new { @class = "menu-link" })
                         </a>
                     </div>
                 </div>
@@ -74,8 +75,11 @@
                 </div>
                 <div class="col-md-3 mb-5 pr-md-5 contact-info">
                     <!-- <li>198 West 21th Street, <br> Suite 721 New York NY 10016</li> -->
-                    <p><span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span> 
-                              219 To Ngoc Van, Linh Dong <br/> Ho Chi Minh City</span></p>
+                    <p>
+                        <span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span>
+                            219 To Ngoc Van, Linh Dong <br /> Ho Chi Minh City
+                        </span>
+                    </p>
                     <p><span class="d-block"><span class="ion-ios-telephone h5 mr-3 text-primary"></span>Phone:</span> <span> 0901092207</span></p>
                     <p><span class="d-block"><span class="ion-ios-email h5 mr-3 text-primary"></span>Email:</span> <span> phangiadat123@gmail.com</span></p>
                 </div>
@@ -105,11 +109,14 @@
                 </p>
             </div>
         </div>
+        <div class="loader"></div>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="@Url.Content("~/Scripts/main.js")"></script>
+    <script src="@Url.Content("~/Scripts/Loader.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery-3.4.1.js")"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication5.Models.LoaiPhong>
+﻿@model IEnumerable<HotelManagement.LoaiPhong>
 
 @{
     ViewBag.Title = "Index";
@@ -10,6 +10,7 @@
     ViewBag.Description = "Room";
     Html.RenderPartial("~/Views/Shared/_BackgroundIntroPartial.cshtml");
 }
+
 <section class="section pb-4">
     <div class="container">
         <div class="row check-availabilty" id="next">
@@ -19,7 +20,8 @@
                         <div class="col-md-7 mb-3 mb-lg-0 col-lg-5">
                             <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
                             <div class="field-icon-wrap">
-                                <input type="date" id="checkin_date" class="form-control" pattern="\d{4}-\d{2}-\d{2}">
+                                <input type="date" id="checkin_date" class="form-control" pattern="\d{4}-\d{2}-\d{2}"
+                                       onchange="checkCheckInDate()">
                             </div>
                         </div>
                         <div class="col-md-7 mb-3 mb-lg-0 col-lg-5">
@@ -29,7 +31,7 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-lg-2 align-self-end">
-                            <button class="btn btn-primary btn-block text-white avl-btn">Check Availabilty</button>
+                            <button class="btn btn-primary btn-block text-white avl-btn" onclick="checkAvailableDate(e)">Check Availabilty</button>
                         </div>
                     </div>
                 </form>
@@ -40,62 +42,88 @@
     </div>
 </section>
 
-
-<section class="section">
+<section class="section" style="padding-top: 3em;">
     <div class="container">
 
         <div class="row room-list">
-            @{ var index = 1; }
-                @foreach (var item in Model)
+            @{
+                var index = 1;
+            }
+            @foreach (var item in Model)
+            {
+
+                string bedType = "";
+                int bedQuantity = 1;
+                if (item.TenLoaiPhong == "Family" || item.TenLoaiPhong == "Superior" || item.TenLoaiPhong == "Family Suite")
                 {
-                    <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
-                        <div class="room">
-                            <figure class="img-wrap">
-                                <img src="" alt="Free website template" class="img-fluid mb-3">
-                            </figure>
-                            <div class="p-3 text-center room-info">
-                                <div class="book-room">
-                                    <h2 class="room-type" id="room-type-@index">@Html.DisplayFor(modelItem => item.TenLoaiPhong)</h2>
-                                    <p class="room-price"><span class="price" id="price-@index">@Html.DisplayFor(modelItem => item.GiaLoaiPhong)</span>/Night</p>
-                                </div>
-                                <div class="interior">
-                                    <p class="bed" id="bed-@index">
-                                        <i class="fa-solid fa-bed"></i>
-                                        1 Single bed
-                                    </p>
-                                    <p class="bath" id="bath-@index">
-                                        <i class="fa-solid fa-bath"></i>
-                                        1 Bath
-                                    </p>
-                                    <p class="wifi">
-                                        <i class="fa-solid fa-wifi"></i>
-                                        Wifi
-                                    </p>
-                                </div>
-                                <div class="book-room-title">
-                                    <span>
-                                        <i class="fa-regular fa-house-user"></i>
-                                        Room quantity
-                                    </span>
-                                    <div style="position: relative; width: 100px; height: 100%;">
-                                        <select name="" id="quan-@index" class="room-quantity inactive">
-                                            <option value="0">0 room</option>
-                                            <option value="1">1 room</option>
-                                            <option value="2">2 rooms</option>
-                                            <option value="3">3 rooms</option>
-                                            <option value="4">4 rooms</option>
-                                            <option value="5">5 rooms</option>
-                                            <option value="6">6 rooms</option>
-                                        </select>
-                                        <div class="block-inactive" ></div>
-                                    </div>
+                    bedQuantity = 2;
+
+                }
+                else
+                {
+                    bedQuantity = 1;
+                }
+                if (item.TenLoaiPhong == "Family" || item.TenLoaiPhong == "Superior")
+                {
+                    bedType = "Single Bed";
+                }
+                else if (item.TenLoaiPhong == "Suite")
+                {
+                    bedType = "Big Twin Bed";
+                }
+                else
+                {
+                    bedType = "Twin Bed";
+                }
+
+                <div class="col-md-6 col-lg-4 mb-5" data-aos="fade-up">
+                    <div class="room">
+                        <figure class="img-wrap">
+                            <img src="@Url.Content("~/Images/" + item.HinhAnh)" alt="Free website template" class="img-fluid mb-3">
+                        </figure>
+                        <div class="p-3 text-center room-info">
+                            <div class="book-room">
+                                <h2 class="room-type" id="room-type-@index">@Html.DisplayFor(modelItem => item.TenLoaiPhong)</h2>
+                                <p class="room-price" style="display: none"><span class="price" id="price-@index">@Html.DisplayFor(modelItem => item.GiaLoaiPhong)</span>/Night</p>
+                                <p class="room-price">
+                                    <span class="price" >
+                                        @{ var gia = item.GiaLoaiPhong; }
+                                        @String.Format("{0:#,##0}", item.GiaLoaiPhong).Replace(",", ".") VNĐ
+                                    </span>/Night
+                                </p>
+                            </div>
+                            <div class="interior">
+                                <p class="bed" id="bed-@index">
+                                    <i class="fa-solid fa-bed"></i>
+                                    @bedQuantity @bedType
+                                </p>
+                                <p class="bath" id="bath-@index">
+                                    <i class="fa-solid fa-bath"></i>
+                                    1 Bath
+                                </p>
+                                <p class="wifi">
+                                    <i class="fa-solid fa-wifi"></i>
+                                    Wifi
+                                </p>
+                            </div>
+                            <div class="book-room-title">
+                                <span>
+                                    <i class="fa-regular fa-house-user"></i>
+                                    Room quantity
+                                </span>
+                                <div style="position: relative; width: 100px; height: 100%;">
+                                    <select id="quan-@index" class="room-quantity inactive" name="">
+                                        <option value="0">0 room</option>
+                                    </select>
+                                    <div class="block-inactive"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    index++;
-                }
-            
+                </div>
+                index++;
+            }
+
         </div>
 
         <p class="book-btn js-book-btn inactive" style="width: 10vw; margin-left: auto; margin-right: auto;">Book Now</p>
@@ -131,3 +159,175 @@
 
     </div>
 </section>
+
+<script>
+    var dateCheckIn = document.querySelector("#checkin_date");
+    var dateCheckOut = document.querySelector("#checkout_date");
+
+    var today = new Date();
+    today.setDate(today.getDate() );
+    var formattedToday = today.toISOString().split('T')[0];
+    dateCheckIn.min = formattedToday;
+
+    var tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 2);
+    var formattedTomorow = today.toISOString().split('T')[0];
+    dateCheckOut.min = formattedTomorow;
+
+    var checkInValue = dateCheckIn.value;
+
+    const checkAvailableBtn = document.querySelector('.avl-btn');
+
+    const checkList = {
+        checkin: '',
+        checkout: '',
+        adult: 1,
+        children: 1,
+    };
+    var checkinForForm = '';
+    var checkoutForForm = '';
+
+    checkAvailableBtn.onclick = (e) => {
+        e.preventDefault();
+        var roomTypes = @Html.Raw(Json.Encode(Model.Select(x => new { x.MaLoaiPhong, x.TenLoaiPhong })));
+
+        checkList.checkin = dateCheckIn.value;
+        checkList.checkout = dateCheckOut.value;
+
+        checkinForForm = dateCheckIn.value;
+        checkoutForForm = dateCheckOut.value;
+
+        for (var i = 0; i < roomTypes.length; i++) {
+            (function () {
+                var roomType = roomTypes[i].MaLoaiPhong;
+                var index = i + 1;
+
+                $.ajax({
+                    url: '/Booking/GetRoomsByRoomTypeID',
+                    type: 'GET',
+                    data: { maLoaiPhong: roomType, checkIn: dateCheckIn.value, checkOut: dateCheckOut.value },
+                    success: function (data) {
+                        // Xóa sự kiện cũ trước khi thêm sự kiện mới
+                        $("#quan-" + index).off("change");
+
+                        // Xóa tất cả các option hiện có trong combobox
+                        $("#quan-" + index).empty();
+                        $("#quan-" + index).append('<option value="0">0 room</option>');
+
+                        // Thêm danh sách phòng mới vào combobox "Room"
+                        for (var j = 1; j <= data.length; j++) {
+                            $("#quan-" + index).append('<option value="' + j + '">' + j + ' rooms' + '</option>');
+                        }
+
+                        // Thêm sự kiện "change" mới cho combobox
+                        $("#quan-" + index).on("change", function () {
+                            var roomList = data;
+
+                            var selectedValue = parseInt($(this).val(), 10);
+
+                            var selectedRoomList = roomList.slice(0, selectedValue);
+                            // Xử lý sự kiện khi combobox thay đổi
+                            $.ajax({
+                                url: '/Booking/DeleteBookRoom',
+                                type: 'POST',
+                                data: {
+                                    maLoaiPhong: roomType,
+                                },
+                            });
+
+                            $.ajax({
+                                url: '/Booking/AddBookRoom',
+                                type: 'POST',
+                                data: {
+                                    maLoaiPhong: roomType,
+                                    phongs: selectedRoomList
+                                },
+                                success: function (data) {
+                                    console.log(data);
+                                },
+                            });
+                        });
+                    }
+                });
+            })();
+        }
+
+        if (checkinForForm != "" && checkoutForForm != "") {
+            //bookBtn.onclick = (e) => {
+            //    e.preventDefault();
+            //}
+            for (const block of blockInactive) {
+                block.style.display = "none";
+            }
+            for (const roomQuantity of roomQuantities) {
+                roomQuantity.style.opacity = "1";
+            }
+        }
+        else if (checkinForForm == "" || checkoutForForm == "") {
+            //bookBtn.onclick = (e) => {
+            //    e.preventDefault();
+            //}
+            for (const block of blockInactive) {
+                block.style.display = "block";
+                if (block.style.display == "block") {
+                    bookBtn.classList.add("inactive");
+                }
+            }
+            for (const roomQuantity of roomQuantities) {
+                roomQuantity.style.opacity = ".3";
+            }
+        }
+    }
+
+    function checkCheckInDate() {
+
+        var date = new Date(dateCheckIn.value);
+        date.setDate(date.getDate() + 1);
+        var formatDate = date.toISOString().split('T')[0];
+        dateCheckOut.min = formatDate;
+
+        var checkInValue = dateCheckIn.value;
+
+        // Nếu date1 có giá trị
+        if (checkInValue) {
+            // Tạo đối tượng Date từ giá trị ngày của date1
+            var date1 = new Date(checkInValue);
+
+            // Tăng ngày lên 1
+            date1.setDate(date1.getDate() + 1);
+
+            // Format ngày thành chuỗi 'YYYY-MM-DD' cho date2
+            var formattedDate = date1.toISOString().split('T')[0];
+
+            // Gán giá trị cho date2
+            dateCheckOut.value = formattedDate;
+        } else {
+            // Nếu date1 không có giá trị, đặt giá trị của date2 thành rỗng
+            dateCheckOut.value = '';
+        }
+    }
+
+     //===================== Hàm Làm mới danh sách sách mượn =====================
+    function resetListPhong() {
+        $.ajax({
+            url: '/Booking/ResetListPhong',
+            type: 'POST',
+            //success: function (data) {
+            //    if (data.success) {
+            //        // Cập nhật giao diện
+            //        var danhSachSachMuon = document.getElementById("danhSachSachMuon");
+            //        danhSachSachMuon.innerHTML = "";
+
+            //        document.getElementById("MaThe").value = "";
+            //        document.getElementById("Name").value = "";
+            //        document.getElementById("SDT").value = "";
+            //        document.getElementById("HanTra").value = "-- Chọn hạn trả --";
+            //    }
+            //}
+        });
+    }
+    //=====================  Xử lý khi load lại trang  =====================
+    document.addEventListener("DOMContentLoaded", function () {
+        resetListPhong();
+    });
+</script>

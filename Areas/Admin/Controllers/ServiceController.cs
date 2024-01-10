@@ -7,18 +7,25 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication5.Models;
+using HotelManagement;
+using PagedList;
 
-namespace WebApplication5.Areas.Admin.Controllers
+namespace HotelManagement.Areas.Admin.Controllers
 {
     public class ServiceController : Controller
     {
         private Hotel_ManagementEntities db = new Hotel_ManagementEntities();
 
         // GET: Admin/Service
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            return View(db.DichVus.ToList());
+            int pageSize = 10; // Số lượng kết quả hiển thị trên mỗi trang
+            int pageNumber = (page ?? 1); // Số trang hiện tại, mặc định là 1 nếu không có trang được chọn
+
+            var dichVus = db.DichVus.OrderBy(dv => dv.TenDichVu)
+                                     .ToPagedList(pageNumber, pageSize); // Thực hiện phân trang cho dữ liệu
+
+            return View(dichVus);
         }
 
         // GET: Admin/Service/Details/5
@@ -49,6 +56,16 @@ namespace WebApplication5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaDichVu,TenDichVu,GiaDichVu")] DichVu dichVu)
         {
+            var existingServiceCode = db.DichVus.FirstOrDefault(dv => dv.MaDichVu == dichVu.MaDichVu);
+            var existingServiceName = db.DichVus.FirstOrDefault(dv => dv.TenDichVu == dichVu.TenDichVu);
+            if (existingServiceCode != null)
+            {
+                ModelState.AddModelError("serviceCode", "Mã dịch vụ đã tồn tại");
+            }
+            if (existingServiceName != null)
+            {
+                ModelState.AddModelError("serviceName", "Tên dịch vụ đã tồn tại");
+            }
             if (ModelState.IsValid)
             {
                 db.DichVus.Add(dichVu);
@@ -81,6 +98,11 @@ namespace WebApplication5.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MaDichVu,TenDichVu,GiaDichVu")] DichVu dichVu)
         {
+            var existingServiceName = db.DichVus.FirstOrDefault(dv => dv.TenDichVu == dichVu.TenDichVu && dv.MaDichVu != dichVu.MaDichVu);
+            if (existingServiceName != null)
+            {
+                ModelState.AddModelError("TenDichVu", "Tên loại phòng đã tồn tại cho một loại phòng khác");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(dichVu).State = EntityState.Modified;
@@ -126,12 +148,22 @@ namespace WebApplication5.Areas.Admin.Controllers
         }
 
         [Route("Search")]
-        public async Task<ActionResult> Search(string tenDV)
+        public async Task<ActionResult> Search(int? page, string tenDV)
         {
-            var ketqua = await db.DichVus.Where(dv => dv.TenDichVu.ToLower().Contains(tenDV.ToLower())).ToListAsync();
+            int pageSize = 10; // Số lượng kết quả hiển thị trên mỗi trang
+            int pageNumber = (page ?? 1); // Số trang hiện tại, mặc định là 1 nếu không có trang được chọn
+
+            IQueryable<DichVu> query = db.DichVus;
+
+            if (!string.IsNullOrEmpty(tenDV))
+            {
+                query = query.Where(dv => dv.TenDichVu.ToLower().Contains(tenDV.ToLower()));
+            }
+
+            var ketqua = query.OrderBy(dv => dv.TenDichVu)
+                                    .ToPagedList(pageNumber, pageSize); // Thực hiện phân trang cho kết quả tìm kiếm
 
             return View("Index", ketqua);
         }
-
     }
 }

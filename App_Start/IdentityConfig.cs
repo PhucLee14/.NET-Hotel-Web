@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using WebApplication5.Models;
+using HotelManagement.Models;
 
-namespace WebApplication5
+namespace HotelManagement
 {
     public class EmailService : IIdentityMessageService
     {

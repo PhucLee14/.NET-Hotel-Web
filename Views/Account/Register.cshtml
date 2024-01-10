@@ -1,43 +1,135 @@
-﻿@model WebApplication5.Models.RegisterViewModel
+﻿@model HotelManagement.KhachHang
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_AddInfoLayout.cshtml";
 }
 
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
+@*<main aria-labelledby="title">
+        <h2 id="title">@ViewBag.Title.</h2>
 
-    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="row">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Create a new account.</h4>
+            <hr />
+            <div class="row">
+                @Html.LabelFor(m => m.TenTaiKhoan, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.TenTaiKhoan, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.TenTaiKhoan, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <div class="row">
+                @Html.LabelFor(m => m.MatKhau, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.MatKhau, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.MatKhau, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
-            <div class="col-md-10">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            <div class="row">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 col-form-label" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="offset-md-2 col-md-10">
-                <input type="submit" value="Register" class="btn btn-outline-dark" />
+            <div class="row">
+                <div class="offset-md-2 col-md-10">
+                    <input type="submit" value="Register" class="btn btn-outline-dark" />
+                </div>
             </div>
-        </div>
-    }
-</main>
+            <div class="row">
+                <div class="offset-md-2 col-md-10">
+                    <label class="label-success">@ViewBag.SuccessMessage</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-md-2 col-md-10">
+                    <label class="label-success">@ViewBag.DuplicateMessage</label>
+                </div>
+            </div>
+        }
+    </main>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+<span class="login100-form-title p-b-32">
+    @ViewBag.Title
+</span>
+<div class="row">
+    <div class="col-md-12">
+        <section id="loginForm">
+            @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="wrap-input100 validate-input" data-validate="Username is reauired">
+                        <span class="label-input100">Email</span>
+                        @Html.TextBoxFor(m => m.TaiKhoanKHs.FirstOrDefault().TenTaiKhoan, new { @class = "input100", placeholder = "Type your email" })
+                        <i class="fa-solid fa-user input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TaiKhoanKHs.FirstOrDefault().TenTaiKhoan, "", new { @class = "text-danger" })
+                    <label class="text-danger">@ViewBag.DuplicateMessage</label>
+
+                    <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        @Html.PasswordFor(m => m.TaiKhoanKHs.FirstOrDefault().MatKhau, new { @class = "input100", placeholder = "Type your password" })
+                        <i class="fa-solid fa-lock input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TaiKhoanKHs.FirstOrDefault().MatKhau, "", new { @class = "text-danger" })
+
+                    <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        @Html.PasswordFor(m => m.TaiKhoanKHs.FirstOrDefault().ConfirmPassword, new { @class = "input100", placeholder = "Type your password" })
+                        <i class="fa-solid fa-lock input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TaiKhoanKHs.FirstOrDefault().ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    <div class="wrap-input100 validate-input" data-validate="Username is reauired">
+                        <span class="label-input100">Name</span>
+                        @Html.TextBoxFor(m => m.TenKhachHang, new { @class = "input100", placeholder = "Type your name"})
+                        <i class="fa-solid fa-user input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.TenKhachHang, "", new { @class = "text-danger" })
+                    <label class="text-danger">@ViewBag.DuplicateMessage</label>
+
+                    <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                        <span class="label-input100">Phone Number</span>
+                        @Html.TextBoxFor(m => m.SoDienThoai, new { @class = "input100", placeholder = "Type your phone number" })
+                        <i class="fa-solid fa-phone input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.SoDienThoai, "", new { @class = "text-danger" })
+
+                    <div class="wrap-input100 validate-input m-t-24" data-validate="Password is required">
+                        <span class="label-input100">Birthday</span>
+                        @Html.TextBoxFor(m => m.NgaySinh, new { @class = "input100", placeholder = "Type your birthday", type = "date"})
+                        <i class="fa-solid fa-calendar input-icon"></i>
+                    </div>
+                    @Html.ValidationMessageFor(m => m.NgaySinh, "", new { @class = "text-danger"})
+                </div>
+            </div>
+                <div class="container-login100-form-btn m-t-36">
+                    <div class="wrap-login100-form-btn width-32p">
+                        <div class="login100-form-bgbtn"></div>
+                        <button class="login100-form-btn" type="submit">
+                            Signup
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex-col-c p-t-20">
+                    <span class="txt1 p-b-17">
+                        Having an account?
+                    </span>
+
+                    @Html.ActionLink("Login", "Login")
+                </div>
+            }
+        </section>
+    </div>
+</div>

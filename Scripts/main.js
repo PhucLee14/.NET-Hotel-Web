@@ -1,46 +1,33 @@
-﻿
-'use strict';
+﻿'use strict';
 
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
-const navHeight = $('.site-header');
-const upBtn = $('#up-btn');
-const arrowLeftBtn = $('.arrow-left');
-const arrowRightBtn = $('.arrow-right');
+const navHeight = document.querySelector('.site-header');
+const upBtn = document.querySelector('#up-btn');
+const arrowLeftBtn = document.querySelector('.arrow-left');
+const arrowRightBtn = document.querySelector('.arrow-right');
 
 //room
-const checkAvailableBtn = $('.avl-btn');
-var dateCheckIn = $("#checkin_date");
-var dateCheckOut = $("#checkout_date");
-const adultsQuantity = $('#adults');
-const childrenQuantity = $('#children');
-const bookBtn = $('.js-book-btn');
+const adultsQuantity = document.querySelector('#adults');
+const childrenQuantity = document.querySelector('#children');
+const bookBtn = document.querySelector('.js-book-btn');
 
-const roomContainer = $('.room-container');
-const roomList = $('.room-list');
-const roomForm = $('.room-form');
-const closeBtn = $('.close-btn');
-const submitBtn = $('.submit-btn');
-const closeEvents = $$('.close-btn, .room-form');
+const roomContainer = document.querySelector('.room-container');
+const roomList = document.querySelector('.room-list');
+const roomForm = document.querySelector('.room-form');
+const closeBtn = document.querySelector('.close-btn');
+const submitBtn = document.querySelector('.submit-btn');
+const closeEvents = document.querySelectorAll('.close-btn, .room-form');
 
-const serviceList = $(".services-list");
+const serviceList = document.querySelector(".services-list");
 
-const bookingForm = $("#booking-form");
+const bookingForm = document.querySelector("#booking-form");
 
-const bookingRoomForm = $(".booking-room-form");
+const bookingRoomForm = document.querySelector(".booking-room-form");
 var counter = 1;
-const checkList = {
-    checkin: '',
-    checkout: '',
-    adult: 1,
-    children: 1,
-};
 var checkinForForm = '';
 var checkoutForForm = '';
 
 if (roomList) {
-    
+
     var checkIn = 'a';
     var checkOut = '';
     var i = 1;
@@ -95,7 +82,7 @@ if (roomList) {
         }
     }
 
-    var roomQuantities = $$('.room-quantity');
+    var roomQuantities = document.querySelectorAll('.room-quantity');
 
 
     for (const roomQuantity of roomQuantities) {
@@ -117,7 +104,6 @@ if (roomList) {
         }
     }
 
-
     bookBtn.onclick = (e) => {
         if (bookBtn.classList.contains("inactive")) {
             e.preventDefault();
@@ -127,6 +113,14 @@ if (roomList) {
             checkIn = checkinForForm;
             checkOut = checkoutForForm;
             var selectedRooms = [];
+
+            var dateCheckIn = document.querySelector("#checkin_date").value;
+            var dateCheckOut = document.querySelector("#checkout_date").value;
+
+            var startDate = new Date(dateCheckIn);
+            var endDate = new Date(dateCheckOut);
+
+            var distanceDate = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
 
             // Lặp qua tất cả các cấu trúc để kiểm tra giá trị
             for (var index = 1; index <= 6; index++) { // Đổi số này tùy thuộc vào số lượng cấu trúc
@@ -153,7 +147,8 @@ if (roomList) {
                 localStorage.setItem('selectedRooms', JSON.stringify(selectedRooms));
                 localStorage.setItem('checkin', JSON.stringify({ data: checkIn }));
                 localStorage.setItem('checkout', JSON.stringify({ data: checkOut }));
-                window.location.href = 'bookingroom';
+                localStorage.setItem('distance', JSON.stringify({ data: distanceDate }));
+                window.location.href = '/Booking/BookingRoom';
 
                 // Hiển thị thông báo hoặc chuyển hướng tới trang khác nếu cần
                 alert('Rooms booked successfully!');
@@ -178,7 +173,7 @@ if (roomList) {
     }
 }
 
-const blockInactive = $$('.block-inactive');
+const blockInactive = document.querySelectorAll('.block-inactive');
 
 
 if (arrowLeftBtn) {
@@ -205,69 +200,6 @@ if (arrowLeftBtn) {
                 counter = 1;
             }
         }, 5000);
-    }
-}
-
-if (checkAvailableBtn) {
-
-    dateCheckIn.addEventListener("change", () => {
-        var date = new Date(dateCheckIn.value);
-        date.setDate(date.getDate() + 1);
-        var formatDate = date.toISOString().split('T')[0];
-        dateCheckOut.min = formatDate;
-
-        var checkInValue = dateCheckIn.value;
-
-        // Nếu date1 có giá trị
-        if (checkInValue) {
-            // Tạo đối tượng Date từ giá trị ngày của date1
-            var date1 = new Date(checkInValue);
-
-            // Tăng ngày lên 1
-            date1.setDate(date1.getDate() + 1);
-
-            // Format ngày thành chuỗi 'YYYY-MM-DD' cho date2
-            var formattedDate = date1.toISOString().split('T')[0];
-
-            // Gán giá trị cho date2
-            dateCheckOut.value = formattedDate;
-        } else {
-            // Nếu date1 không có giá trị, đặt giá trị của date2 thành rỗng
-            dateCheckOut.value = '';
-        }
-    });
-    checkAvailableBtn.onclick = (e) => {
-        e.preventDefault();
-        checkList.checkin = dateCheckIn.value;
-        checkList.checkout = dateCheckOut.value;
-
-        checkinForForm = dateCheckIn.value;
-        checkoutForForm = dateCheckOut.value;
-        if (checkinForForm != "" && checkoutForForm != "") {
-            //bookBtn.onclick = (e) => {
-            //    e.preventDefault();
-            //}
-            for (const block of blockInactive) {
-                block.style.display = "none";
-            }
-            for (const roomQuantity of roomQuantities) {
-                roomQuantity.style.opacity = "1";
-            }
-        }
-        else if (checkinForForm == "" || checkoutForForm == "") {
-                //bookBtn.onclick = (e) => {
-                //    e.preventDefault();
-                //}
-                for (const block of blockInactive) {
-                    block.style.display = "block";
-                    if (block.style.display == "block") {
-                        bookBtn.classList.add("inactive");
-                    }
-                }
-                for (const roomQuantity of roomQuantities) {
-                    roomQuantity.style.opacity = ".3";
-                }
-            }
     }
 }
 

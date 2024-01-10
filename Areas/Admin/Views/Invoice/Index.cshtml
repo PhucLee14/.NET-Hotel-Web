@@ -1,78 +1,95 @@
-﻿@model IEnumerable<WebApplication5.Models.HoaDon>
+﻿@model PagedList.IPagedList<HotelManagement.HoaDon>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="card-title title ml-32 mb-24">Invoice List</h2>
 
-@using (Html.BeginForm("Search", "Invoice", FormMethod.Get))
+@using (Html.BeginForm("Search", "Invoice", FormMethod.Get, new { @class = "search-form" }))
 {
     <div class="input-group">
-        <div class="form-outline">
+        <div class="form-outline df-flex">
 
-            <label class="form-label" for="form1">Search</label>
-            @Html.TextBox("ngayDau", null, new { @class = "form-control", type = "date" })
-            @Html.TextBox("ngayCuoi", null, new { @class = "form-control", type = "date" })
+            @Html.TextBox("ngayDau", null, new { @class = "form-control bg-light border-0 small date-check", type = "date" })
+
+            @Html.TextBox("ngayCuoi", null, new { @class = "form-control bg-light border-0 small date-check", type = "date" })
         </div>
 
-        <input type="submit" value=" Tìm " date="date" />
+        <input type="submit" value=" Tìm " date="date" class="btn btn-primary date-check" style="border-radius: 8px !important" />
     </div>
 }
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NgayLapHoaDon)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TienPhong)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TienDichVu)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NhanVien.CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.KhachHang.CCCD)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhieuThue.HienTrang)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<div class="table-section">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayLapHoaDon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienPhong)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TienDichVu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NhanVien.CCCD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KhachHang.CCCD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhieuThue.HienTrang)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.MaHoaDon })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MaHoaDon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().KhachHang.TenKhachHang)
+            </th>
+            <th>
+                Total Amount
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NhanVien.TenNhanVien)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NgayLapHoaDon)
+            </th>
+            <th>
+                Action
+            </th>
         </tr>
-    }
-
-</table>
+        @foreach (var item in Model)
+        {
+            if (item.PhieuDangKy.HienTrang == "Đã trả phòng")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaHoaDon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KhachHang.TenKhachHang)
+                    </td>
+                    <td>
+                        @{
+                            var tongTien = item.TienPhong + item.TienDichVu;
+                            if (item.TienDichVu == null)
+                            {
+                                tongTien = item.TienPhong;
+                            }
+                            else
+                            {
+                                tongTien = item.TienDichVu + item.TienPhong;
+                            }
+                        }
+                        @String.Format("{0:#,##0}", tongTien).Replace(",", ".") VNĐ
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NhanVien.TenNhanVien)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NgayLapHoaDon)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.MaHoaDon.Trim() })
+                        <a href="@Url.Action("GenerateReport", "Invoice", new { id = item.MaHoaDon.Trim() })">
+                            <i class="fas fa-download"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+<!-- Hiển thị phân trang -->
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

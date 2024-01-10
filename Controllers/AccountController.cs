@@ -1,28 +1,39 @@
 ﻿using System;
-using System.Globalization;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using HotelManagement.Models;
+using HotelManagement.Services.Email.Models;
+using HotelManagement.Utils.JWT;
+using HotelManagement;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using WebApplication5.Models;
+using System.Data.Entity.Infrastructure;
+using System.Reflection;
 
-namespace WebApplication5.Controllers
+namespace HotelManagement.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        Hotel_ManagementEntities db = new Hotel_ManagementEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private HotelManagement.Services.Email.EmailService _emailService;
+        private JwtUtil _jwtUtil;
 
         public AccountController()
         {
+            _emailService = new HotelManagement.Services.Email.EmailService();
+            _jwtUtil = new JwtUtil();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +45,9 @@ namespace WebApplication5.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -55,9 +66,10 @@ namespace WebApplication5.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            //ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
@@ -66,30 +78,24 @@ namespace WebApplication5.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(TaiKhoanKH user)
         {
-            if (!ModelState.IsValid)
+            var tenTaiKhoan = user.TenTaiKhoan;
+            var matKhau = user.MatKhau;
+            var query = db.TaiKhoanKHs.SingleOrDefault(m => m.TenTaiKhoan == user.TenTaiKhoan && m.MatKhau == user.MatKhau);
+            if (query != null)
             {
-                return View(model);
+                Session["User"] = query;
+                Session["MaKH"] = query.MaKhachHang;
+                return RedirectToAction("Index", "Home");
             }
-
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            else
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                Response.Write("<script>alert('Invalid Credentials')</script>");
+                return View();
             }
         }
+
 
         //
         // GET: /Account/VerifyCode
@@ -120,7 +126,7 @@ namespace WebApplication5.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -147,29 +153,41 @@ namespace WebApplication5.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register([Bind(Include = "MaKhachHang,SoDienThoai,TenKhachHang,NgaySinh")] KhachHang khachHang, [Bind(Include = "TenTaiKhoan,MatKhau,ConfirmPassword")] TaiKhoanKH user)
         {
-            if (ModelState.IsValid)
+            // Check if the username already exists in TaiKhoanKH
+            if (db.TaiKhoanKHs.Any(x => x.TenTaiKhoan == user.TenTaiKhoan))
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+                ModelState.AddModelError("TenTaiKhoan", "Username already exists");
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            // Check if the phone number already exists in KhachHang
+            var existingCustomerPhone = db.KhachHangs.FirstOrDefault(k => k.SoDienThoai == khachHang.SoDienThoai);
+
+            if (existingCustomerPhone != null)
+            {
+                ModelState.AddModelError("SoDienThoai", "Số điện thoại đã đăng ký.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                db.KhachHangs.Add(khachHang);
+
+                user.MaKhachHang = khachHang.MaKhachHang;
+                db.TaiKhoanKHs.Add(user);
+                db.SaveChanges();
+
+                ViewBag.SuccessMessage = "Saved Successfully";
+                return RedirectToAction("Login", new TaiKhoanKH());
+            }
+
+            return View(khachHang);
+        }
+
+        [AllowAnonymous]
+        public ActionResult AddGuestInfo()
+        {
+            return View();
         }
 
         //
@@ -200,25 +218,47 @@ namespace WebApplication5.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
+            // validate model
+            if (!ModelState.IsValid)
+                return View();
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
-            }
+            // kiem tra user & ten user
+            //var user = await UserManager.FindByNameAsync(model.Email);
+            //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            //{
+            //    // trả về view lỗi (không toonftaij user)
+            //    return View("ForgotPasswordConfirmation");
+            //}
+
+            // tao token
+            string tokenExpired = "50m";
+            var token = _jwtUtil.GenerateToken(new Claim[] { new Claim("email", model.Email) }, tokenExpired);
+            token = token.Replace(".", "@");
+
+
+
+            // tao emailMessage
+            var emailMessagel = new EmailMessage
+            {
+                To = model.Email,
+                Subject = "Forgot password",
+                TemplateName = "ResetPassword",
+                Model = new ResetPasswordModel
+                {
+                    Firstname = "Nguyen van teo",
+                    SiteUrl = "https://localhost:44326",
+                    Token = token
+                }
+            };
+
+            // gui email
+            await _emailService.SendEmailAsync(emailMessagel);
+
+
 
             // If we got this far, something failed, redisplay form
             return View(model);
+
         }
 
         //
@@ -232,9 +272,26 @@ namespace WebApplication5.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string token)
         {
-            return code == null ? View("Error") : View();
+            // edit token
+            token = token.Replace("@", ".");
+
+            try
+            {
+                // validate token
+                var claims = _jwtUtil.ValidateToken(token);
+
+                // return view nhu bth
+                return View();
+
+            }
+            catch (Exception e)
+            {
+                // return view lỗi
+                return View();
+
+            }
         }
 
         //
@@ -242,25 +299,51 @@ namespace WebApplication5.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(string token, ResetPasswordViewModel model)
         {
-            if (!ModelState.IsValid)
+            // edit token
+            token = token.Replace("@", ".");
+
+            try
             {
-                return View(model);
+
+                // validate token
+                var claims = _jwtUtil.ValidateToken(token);
+                string email = claims?.Find(c => c.Type == "email")?.Value;
+
+
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                // tìm user trong db
+                var user = await UserManager.FindByNameAsync(email);
+
+                if (user == null)
+                {
+                    // return view loi
+                    return RedirectToAction("ResetPasswordConfirmation", "Account");
+                }
+
+                // doi pass trong db
+                var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ResetPasswordConfirmation", "Account");
+                }
+                AddErrors(result);
+
+                return View();
+
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
+            catch (Exception e)
             {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                // return view lỗi
+                return View();
+
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
-            }
-            AddErrors(result);
-            return View();
         }
 
         //
@@ -387,13 +470,16 @@ namespace WebApplication5.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            // Xóa thông tin đăng nhập khỏi Session hoặc bất kỳ nơi nào bạn lưu trữ thông tin đăng nhập
+            Session["User"] = null;
+
+            // Chuyển hướng đến trang Index của Home
             return RedirectToAction("Index", "Home");
         }
+
 
         //
         // GET: /Account/ExternalLoginFailure

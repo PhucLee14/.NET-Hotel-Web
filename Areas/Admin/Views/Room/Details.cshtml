@@ -1,35 +1,40 @@
-﻿@model WebApplication5.Models.Phong
+﻿@model HotelManagement.Phong
 
 @{
     ViewBag.Title = "Details";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="card-title title ml-32">Room @ViewBag.ID Detail</h2>
 
 <div>
-    <h4>Phong</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.HienTrang)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HienTrang)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LoaiPhong.TenLoaiPhong)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LoaiPhong.TenLoaiPhong)
-        </dd>
-
-    </dl>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HienTrang)
+            </th>
+            <td>
+                @*@Html.DisplayFor(model => model.HienTrang)*@
+                @{
+                    string hienTrang = Model.HienTrang ? "Unavailable Room" : "Available Room";
+                }
+                @hienTrang
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LoaiPhong.TenLoaiPhong)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.LoaiPhong.TenLoaiPhong)
+            </td>
+        </tr>
+    </table>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhong }) |
+@*<p class="pl-12 ml-16 mt-32 mb-24">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhong }, new { @class = "create-btn"})
+</p>*@
+<p class="pl-12 ml-16 mt-32 mb-24 back-btn">
     @Html.ActionLink("Back to List", "Index")
 </p>
